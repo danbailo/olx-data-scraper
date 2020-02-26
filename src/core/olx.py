@@ -1,8 +1,7 @@
-import requests
 from bs4 import BeautifulSoup
-import re
+import requests
 import json
-
+import re
 
 headers = {
     'authority': 'www.olx.com.br',
@@ -19,20 +18,21 @@ headers = {
 }
 
 class Olx:
-
     def __init__(self, file):
         self.__base_url = "https://www.olx.com.br"
         self.file = file
         self.data = {}
         self.pages = {}
         self.pages_pattern = re.compile(r"(.*\?o=)(\d+)(.*)")
+        self.id_links = 0
+        self.id_data = 0
 
-    def get_urn(self):
+    def get_urn(self): #pega as extensoes do txt
         file = open(self.file, "r")
         all_urn = [urn.replace("\n", "") for urn in file.readlines()]
         return all_urn
 
-    def get_pages(self, all_urn):
+    def get_pages(self, all_urn): #a partir das extensoes do txt, pega da page 1 ate a ultima
         for urn in all_urn:
             uri = self.__base_url + urn
             response = requests.get(uri, headers=headers)
@@ -44,86 +44,95 @@ class Olx:
             first, last_page, second = self.pages_pattern.match(last_page_link).groups()
             all_pages = [first + str(i) + second for i in range(1, int(last_page) + 1)]
         return all_pages
-                
-    def get_links(self, pages):
+
+    ################################################################################################################
+    def get_links(self, pages): #coleta os links de cada anuncio de todas as paginas
         links = {}
         request_error = 0
         while True:
             try:
-                for page in pages:
-                    response = requests.get(page, headers=headers)
-                    if not response.ok:
-                        print("Request error!")
-                        return False
-                    soup = BeautifulSoup(response.text, "html.parser")
-                    ul = soup.find("ul", attrs={"id": "main-ad-list"})
-                    for link in ul.find_all("a"):
-                        links[link.get("id")] = link.get("href")
+                response = requests.get(pages, headers=headers)
+                if not response.ok:
+                    print("Request error!")
+                    return False
+                soup = BeautifulSoup(response.text, "html.parser")
+                ul = soup.find("ul", attrs={"id": "main-ad-list"})
+                for link in ul.find_all("a"):
+                    links[self.id_links] = link.get("href")
+                    self.id_links += 1
                 break
-            except:
+            except Exception as err:
+                print(err)
                 request_error += 1
                 if request_error >= 10:
                     print("Request error, tries exceeded!")
                     return False
         return links
+    ################################################################################################################
 
     def get_json(self, links):
-        for id_announcement, link_announcement in links.items():
-            response = requests.get(link_announcement, headers=headers)
-            soup = BeautifulSoup(response.text, "html.parser")
+        response = requests.get(links, headers=headers)
+        soup = BeautifulSoup(response.text, "html.parser")
+        try:
             script_tag = soup.find("script", attrs={"data-json":re.compile(".*")}).get("data-json")
-            json_data = json.loads(script_tag)
+        except AttributeError:
+            print("error")
+            return False
+        json_data = json.loads(script_tag)
 
-            municipality = json_data["ad"]["location"]["municipality"]
+        id_announcement = json_data["ad"]["listId"]
 
-            state = json_data["ad"]["location"]["uf"]
+        municipality = json_data["ad"]["location"]["municipality"]
 
-            zipcode = json_data["ad"]["location"]["zipcode"]
+        state = json_data["ad"]["location"]["uf"]
 
-            price = json_data["ad"]["priceValue"]
+        zipcode = json_data["ad"]["location"]["zipcode"]
 
-            lenght = ""
-            for len_properties in json_data["ad"]["properties"]:
-                if len_properties["label"] == "Tamanho":
-                    lenght = len_properties["value"]
+        price = json_data["ad"]["priceValue"]
 
-            type_ = ""
-            for type_properties in json_data["ad"]["properties"]:
-                if type_properties["label"] == "Tipo":
-                    type_ = type_properties["value"]   
+        lenght = ""
+        for len_properties in json_data["ad"]["properties"]:
+            if len_properties["label"] == "Tamanho":
+                lenght = len_properties["value"]
 
-            title = json_data["ad"]["subject"]         
+        type_ = ""
+        for type_properties in json_data["ad"]["properties"]:
+            if type_properties["label"] == "Tipo":
+                type_ = type_properties["value"]   
 
-            description = json_data["ad"]["description"]
+        title = json_data["ad"]["subject"]         
 
-            imgs = [img["original"] for img in json_data["ad"]["images"]]
+        description = json_data["ad"]["description"]
 
-            phone = json_data["ad"]["phone"]["phone"]
+        imgs = [img["original"] for img in json_data["ad"]["images"]]
 
-            ddd = json_data["ad"]["location"]["ddd"]
-            
-            url = json_data["ad"]["friendlyUrl"]
+        phone = json_data["ad"]["phone"]["phone"]
 
-            date_hour = json_data["ad"]["listTime"]
+        ddd = json_data["ad"]["location"]["ddd"]
+        
+        url = json_data["ad"]["friendlyUrl"]
 
-            professional = json_data["ad"]["professionalAd"]
+        date_hour = json_data["ad"]["listTime"]
 
-            self.data[id_announcement] = {
-                "id_anuncio": id_announcement,
-                "municipio": municipality,
-                "estado": state,
-                "cep": zipcode,
-                "preco": price,
-                "area": lenght,
-                "tipo": type_, #perguntar o que eh
-                "titulo": title,
-                "descricao": description,
-                "fotos": imgs,
-                "ddd": ddd,
-                "telefone": phone,
-                "url": url,
-                "data": date_hour,
-                "profissional": professional,
-            }
+        professional = json_data["ad"]["professionalAd"]
+
+        self.data[self.id_data] = {
+            "id_anuncio": id_announcement,
+            "municipio": municipality,
+            "estado": state,
+            "cep": zipcode,
+            "preco": price,
+            "area": lenght,
+            "tipo": type_, #perguntar o que eh
+            "titulo": title,
+            "descricao": description,
+            "fotos": imgs,
+            "ddd": ddd,
+            "telefone": phone,
+            "url": url,
+            "data": date_hour,
+            "profissional": professional,
+        }
+        self.id_data += 1
 
 

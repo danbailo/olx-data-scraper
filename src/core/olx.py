@@ -24,25 +24,34 @@ class Olx:
         self.__base_url = "https://www.olx.com.br"
         self.file = file
         self.data = {}
+        self.pages = {}
+        self.pages_pattern = re.compile(r"(.*\?o=)(\d+)(.*)")
 
     def get_urn(self):
         file = open(self.file, "r")
         all_urn = [urn.replace("\n", "") for urn in file.readlines()]
         return all_urn
-    
-    def get_links(self, all_urn):
+
+    def get_pages(self, all_urn):
+        for urn in all_urn:
+            uri = self.__base_url + urn
+            response = requests.get(uri, headers=headers)
+            if not response.ok:
+                print("Request error!")
+                return False
+            soup = BeautifulSoup(response.text, "html.parser")
+            last_page_link = soup.find("a", attrs={"title": "Última página"}).get("href")
+            first, last_page, second = self.pages_pattern.match(last_page_link).groups()
+            all_pages = [first + str(i) + second for i in range(1, int(last_page) + 1)]
+        return all_pages
+                
+    def get_links(self, pages):
         links = {}
         request_error = 0
         while True:
             try:
-                for urn in all_urn:
-                    uri = self.__base_url + urn
-                    response = requests.get(uri, headers=headers)
-                    # if response.status_code == 403:
-                    #     new_urn = "/imoveis" + urn
-                    #     uri = self.__base_url + new_urn                    
-                    #     response = requests.get(uri, headers=headers)
-                    #     print(uri)
+                for page in pages:
+                    response = requests.get(page, headers=headers)
                     if not response.ok:
                         print("Request error!")
                         return False
@@ -58,32 +67,12 @@ class Olx:
                     return False
         return links
 
-# Os valores que devem ser retornados:
-# - Município
-# - Estado
-# - CEP
-# - Preço
-# - Área (tamanho do terreno)
-# - Tipo
-# - Título
-# - Descrição
-# - Fotos (se conseguir baixar as fotos para o server e organizar em pastas)
-# - Informações de Contato (nome, telefone, data do último acesso do anunciante, email, facebook)
-# - URL de onde foi coletado o anúncio
-# - Código do anúncio       
-# - data e hora da publicação do anúncio
-# - Indicação se o anúncio é profissional 
-
     def get_json(self, links):
         for id_announcement, link_announcement in links.items():
             response = requests.get(link_announcement, headers=headers)
             soup = BeautifulSoup(response.text, "html.parser")
             script_tag = soup.find("script", attrs={"data-json":re.compile(".*")}).get("data-json")
-            #print("ID:", id_announcement)
-            #print(json.dumps(json.loads(script_tag), indent=4, ensure_ascii=False))
             json_data = json.loads(script_tag)
-
-            #print(json_data.keys())
 
             municipality = json_data["ad"]["location"]["municipality"]
 
@@ -97,15 +86,11 @@ class Olx:
             for len_properties in json_data["ad"]["properties"]:
                 if len_properties["label"] == "Tamanho":
                     lenght = len_properties["value"]
-            if lenght == "":
-                lenght = "Area nao cadastrado"
 
             type_ = ""
             for type_properties in json_data["ad"]["properties"]:
                 if type_properties["label"] == "Tipo":
-                    type_ = type_properties["value"]
-            if type_ == "":
-                type_ = "Tipo nao cadastrado"       
+                    type_ = type_properties["value"]   
 
             title = json_data["ad"]["subject"]         
 
@@ -113,15 +98,9 @@ class Olx:
 
             imgs = [img["original"] for img in json_data["ad"]["images"]]
 
-            phone = ""
             phone = json_data["ad"]["phone"]["phone"]
-            if phone == "":
-                phone = "Telefone nao cadastrado"
 
-            ddd = ""
             ddd = json_data["ad"]["location"]["ddd"]
-            if ddd == "":
-                ddd = "DDD nao cadastrado"
             
             url = json_data["ad"]["friendlyUrl"]
 

@@ -1,6 +1,7 @@
 import psycopg2
 import re
 from tqdm import trange
+import unicodedata
 
 class Database:    
     def __init__(self, dbname, user, password):
@@ -36,32 +37,36 @@ class Database:
     def insert_data(self, data):
         for i in trange(len(data)):
             try:
-                new_price = re.sub(r"(R\$\s|\.)", "", data[i]["preco"])
+                id_anuncio = data[i][0]
+                municipio = data[i][1]
+                estado = data[i][2]
+                cep = data[i][3]
+                preco = re.sub(r"(R\$\s|\.)", "", data[i][4])
+                area = data[i][5]
+                tipo = data[i][6]
+                titulo = data[i][7]
+                descricao = data[i][8]
+                fotos = data[i][9]
+                ddd = data[i][10]
+                telefone = data[i][11]
+                url = data[i][12]
+                data_ = data[i][13]
+                profissional = data[i][14]
             except TypeError:
-                new_price = "0"
+                preco = "0"
             self.cur.execute("""
-                INSERT INTO mytable (id_anuncio, municipio, estado, cep, preco, area, tipo, titulo, descricao, fotos, ddd, telefone, url, data, profissional)
-                VALUES(%s, %s, %s, %s, %s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s, %s ,%s) ON CONFLICT (id_anuncio) DO NOTHING;""",                
-                (data[i]["id_anuncio"],
-                data[i]["municipio"],
-                data[i]["estado"],
-                data[i]["cep"],
-                new_price,
-                data[i]["area"],
-                data[i]["tipo"],
-                data[i]["titulo"],
-                data[i]["descricao"],
-                data[i]["fotos"],
-                data[i]["ddd"],
-                data[i]["telefone"],
-                data[i]["url"],
-                data[i]["data"],
-                data[i]["profissional"])
+                INSERT INTO mytable 
+                (id_anuncio, municipio, estado, cep, preco, area, tipo, titulo, descricao, fotos, ddd, telefone, url, data, profissional) 
+                VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) ON CONFLICT (id_anuncio) 
+                DO UPDATE SET 
+                (id_anuncio, municipio, estado, cep, preco, area, tipo, titulo, 
+                descricao, fotos, ddd, telefone, url, data, profissional) = 
+                (EXCLUDED.id_anuncio, EXCLUDED.municipio, EXCLUDED.estado, EXCLUDED.cep, EXCLUDED.preco, EXCLUDED.area, EXCLUDED.tipo, EXCLUDED.titulo, 
+                EXCLUDED.descricao, EXCLUDED.fotos, EXCLUDED.ddd, EXCLUDED.telefone, EXCLUDED.url, EXCLUDED.data, EXCLUDED.profissional);""",
+                (id_anuncio, municipio, estado, cep, preco, area, tipo, titulo, descricao, fotos, ddd, telefone, url, data_, profissional)
             )
-        self.conn.commit()
+            self.conn.commit()
 
     def __del__(self):
         self.cur.close()
         self.conn.close()
-
-

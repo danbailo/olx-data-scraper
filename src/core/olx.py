@@ -34,6 +34,7 @@ class Olx:
         return all_urn
 
     def get_pages(self, all_urn): #a partir das extensoes do txt, pega da page 1 ate a ultima
+        all_pages = []
         for urn in all_urn:
             uri = self.__base_url + urn
             response = requests.get(uri, headers=headers)
@@ -43,12 +44,12 @@ class Olx:
             soup = BeautifulSoup(response.text, "html.parser")
             last_page_link = soup.find("a", attrs={"title": "Última página"}).get("href")
             first, last_page, second = self.pages_pattern.match(last_page_link).groups()
-            all_pages = [first + str(i) + second for i in range(1, int(last_page) + 1)]
+            pages = [first + str(i) + second for i in range(1, int(last_page) + 1)]
+            all_pages.extend(pages)
         return all_pages
 
-    ################################################################################################################
     def get_links(self, pages): #coleta os links de cada anuncio de todas as paginas
-        links = {}
+        links = []
         request_error = 0
         while True:
             try:
@@ -59,8 +60,7 @@ class Olx:
                 soup = BeautifulSoup(response.text, "html.parser")
                 ul = soup.find("ul", attrs={"id": "main-ad-list"})
                 for link in ul.find_all("a"):
-                    links[self.id_links] = link.get("href")
-                    self.id_links += 1
+                    links.append(link.get("href"))
                 break
             except Exception as err:
                 print(err)
@@ -69,7 +69,6 @@ class Olx:
                     print("Request error, tries exceeded!")
                     return False
         return links
-    ################################################################################################################
 
     def get_json(self, links):
         request_error = 0
@@ -129,24 +128,22 @@ class Olx:
 
         professional = json_data["ad"]["professionalAd"]
 
-        if id_announcement not in self.data.keys():
-            self.data[id_announcement] = {
-                "id_anuncio": id_announcement,
-                "municipio": municipality,
-                "estado": state,
-                "cep": zipcode,
-                "preco": price,
-                "area": lenght,
-                "tipo": type_, #perguntar o que eh
-                "titulo": title,
-                "descricao": description,
-                "fotos": imgs,
-                "ddd": ddd,
-                "telefone": phone,
-                "url": url,
-                "data": date_hour,
-                "profissional": professional,
-            }
-        self.id_data += 1
+        return (
+            id_announcement,
+            municipality,
+            state,
+            zipcode,
+            price,
+            lenght,
+            type_,
+            title,
+            description,
+            imgs,
+            ddd,
+            phone,
+            url,
+            date_hour,
+            professional,
+        )
 
 

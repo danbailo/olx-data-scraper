@@ -14,11 +14,12 @@ if __name__ == "__main__":
 
     
     all_urn = olx.get_urn()
+
+    print("\nColetando paginas dos anuncios...")
     pages = olx.get_pages(all_urn)
+    print("{len_pages} Paginas coletadas!\n".format(len_pages=len(pages)))
 
-
-
-    print("\nColetando links de todos os anuncios...")
+    print("Coletando links de todos os anuncios...")
     pool = ThreadPool(10)
     start_links = time.time() #TIMER
     links = {}
@@ -27,22 +28,22 @@ if __name__ == "__main__":
     end_links = time.time() #TIMER
 
     del pool   
-    print("{len_links} Anuncios coletados!\n".format(len_links=len(links)))
+    print("{len_links} Anuncios coletados!".format(len_links=len(links)))
     print("time to get links:", end_links-start_links)
 
     pool = ThreadPool(32)
 
-    print("Coletando dados dos anuncios...")
+    print("\nColetando dados dos anuncios...")
     start_collect = time.time() #TIMER
     pool.map(olx.get_json, links.values())
     end_collect= time.time() #TIMER
-    print("Dados coletados!\n")
-    print("time collect\n:", end_collect-start_collect)
+    print("Dados coletados!")
+    print("time collect", end_collect-start_collect)
 
     del pool
     
-    print("Inserindo dados no banco...")
-    db.insert_data(list(olx.data.values()))
+    print("\nInserindo dados no banco...")
+    db.insert_data(olx.data)
     print("Dados inseridos!\n")
     
     

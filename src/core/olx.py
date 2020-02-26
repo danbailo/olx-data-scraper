@@ -21,11 +21,10 @@ class Olx:
     def __init__(self, file):
         self.__base_url = "https://www.olx.com.br"
         self.file = file
-        self.data = {}
+        self.data = []
         self.pages = {}
         self.pages_pattern = re.compile(r"(.*\?o=)(\d+)(.*)")
         self.id_links = 0
-        self.id_data = 0
 
     def get_urn(self): #pega as extensoes do txt
         file = open(self.file, "r")
@@ -116,23 +115,22 @@ class Olx:
 
         professional = json_data["ad"]["professionalAd"]
 
-        self.data[self.id_data] = {
-            "id_anuncio": id_announcement,
-            "municipio": municipality,
-            "estado": state,
-            "cep": zipcode,
-            "preco": price,
-            "area": lenght,
-            "tipo": type_, #perguntar o que eh
-            "titulo": title,
-            "descricao": description,
-            "fotos": imgs,
-            "ddd": ddd,
-            "telefone": phone,
-            "url": url,
-            "data": date_hour,
-            "profissional": professional,
-        }
-        self.id_data += 1
+        self.data.append(
+            (id_announcement,
+            municipality,
+            state,
+            zipcode,
+            price,
+            lenght,
+            type_, #perguntar o que eh
+            title,
+            description,
+            imgs,
+            ddd,
+            phone,
+            url,
+            date_hour,
+            professional)
+        )
 
 

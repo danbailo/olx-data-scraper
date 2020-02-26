@@ -13,7 +13,7 @@ class Database:
         self.cur = self.conn.cursor()
         self.cur.execute("""
                 CREATE TABLE IF NOT EXISTS mytable (
-                    id_anuncio INTEGER,
+                    id_anuncio BIGINT,
                     municipio VARCHAR(64),
                     estado CHAR(2),
                     cep CHAR(8),
@@ -36,27 +36,30 @@ class Database:
     def insert_data(self, data):
         for i in trange(len(data)):
             try:
-                new_price = re.sub(r"(R\$\s|\.)", "", data[i]["preco"])
+                new_price = re.sub(r"(R\$\s|\.)", "", data[i][4])
             except TypeError:
                 new_price = "0"
             self.cur.execute("""
                 INSERT INTO mytable (id_anuncio, municipio, estado, cep, preco, area, tipo, titulo, descricao, fotos, ddd, telefone, url, data, profissional)
-                VALUES(%s, %s, %s, %s, %s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s, %s ,%s) ON CONFLICT (id_anuncio) DO NOTHING;""",
-                (data[i]["id_anuncio"],
-                data[i]["municipio"],
-                data[i]["estado"],
-                data[i]["cep"],
+                VALUES(%s, %s, %s, %s, %s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s, %s ,%s);""",
+                #VALUES(%s, %s, %s, %s, %s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s, %s ,%s) ON CONFLICT (id_anuncio) DO NOTHING;""",
+                #VALUES(%s, %s, %s, %s, %s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s, %s ,%s) 
+                # ON CONFLICT (id_anuncio) DO UPDATE;""",
+                (data[i][0],
+                data[i][1],
+                data[i][2],
+                data[i][3],
                 new_price,
-                data[i]["area"],
-                data[i]["tipo"],
-                data[i]["titulo"],
-                data[i]["descricao"],
-                data[i]["fotos"],
-                data[i]["ddd"],
-                data[i]["telefone"],
-                data[i]["url"],
-                data[i]["data"],
-                data[i]["profissional"])
+                data[i][5],
+                data[i][6],
+                data[i][7],
+                data[i][8],
+                data[i][9],
+                data[i][10],
+                data[i][11],
+                data[i][12],
+                data[i][13],
+                data[i][14])
             )
         self.conn.commit()
 

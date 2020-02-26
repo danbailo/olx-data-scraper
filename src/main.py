@@ -31,7 +31,7 @@ if __name__ == "__main__":
     print("{len_links} Anuncios coletados!".format(len_links=len(links)))
     print("time to get links:", end_links-start_links)
 
-    pool = ThreadPool(16)
+    pool = ThreadPool(32)
 
     print("\nColetando dados dos anuncios...")
     start_collect = time.time() #TIMER

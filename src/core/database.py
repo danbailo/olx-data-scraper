@@ -65,7 +65,7 @@ class Database:
                 EXCLUDED.descricao, EXCLUDED.fotos, EXCLUDED.ddd, EXCLUDED.telefone, EXCLUDED.url, EXCLUDED.data, EXCLUDED.profissional);""",
                 (id_anuncio, municipio, estado, cep, preco, area, tipo, titulo, descricao, fotos, ddd, telefone, url, data_, profissional)
             )
-            self.conn.commit()
+        self.conn.commit()
 
     def __del__(self):
         self.cur.close()

@@ -1,0 +1,366 @@
+{
+    "ad": {
+        "listId": 714910315,
+        "body": "Área de 380 hectares totalmente plana e enxuta , própria para soja, planta se em 90% da área. <br>Já foi plantado em 150 hectares.<br>Localizada à 32 km de redenção e próximo a grandes plantadores, região de safrinha.<br>Valor 6 200,00 Por hectare. <br>Possibilidade de aumento da área",
+        "subject": "Fazenda para soja",
+        "priceLabel": "Preço",
+        "priceValue": "R$ 2.356.000",
+        "oldPrice": null,
+        "professionalAd": false,
+        "category": 1100,
+        "parentCategoryName": "Imóveis",
+        "categoryName": "Terrenos, sítios e fazendas",
+        "searchCategoryLevelZero": 1000,
+        "searchCategoryLevelOne": 1100,
+        "searchCategoryLevelTwo": 0,
+        "origListTime": 1582577814,
+        "adReply": "0",
+        "friendlyUrl": "https://pa.olx.com.br/regiao-de-maraba/terrenos/fazenda-para-soja-714910315",
+        "user": {
+            "userId": 26952819,
+            "userUid": 25410176,
+            "name": "joao"
+        },
+        "phone": {
+            "phone": "",
+            "phoneHidden": true,
+            "phoneVerified": true
+        },
+        "images": [
+            {
+                "original": "https://img.olx.com.br/images/98/983006011841018.jpg",
+                "originalAlt": "Fazenda para soja",
+                "thumbnail": "https://img.olx.com.br/thumbs/98/983006011841018.jpg"
+            },
+            {
+                "original": "https://img.olx.com.br/images/98/983006013744481.jpg",
+                "originalAlt": "Fazenda para soja - Foto 2",
+                "thumbnail": "https://img.olx.com.br/thumbs/98/983006013744481.jpg"
+            },
+            {
+                "original": "https://img.olx.com.br/images/98/980006012793056.jpg",
+                "originalAlt": "Fazenda para soja - Foto 3",
+                "thumbnail": "https://img.olx.com.br/thumbs/98/980006012793056.jpg"
+            },
+            {
+                "original": "https://img.olx.com.br/images/98/988006015861902.jpg",
+                "originalAlt": "Fazenda para soja - Foto 4",
+                "thumbnail": "https://img.olx.com.br/thumbs/98/988006015861902.jpg"
+            },
+            {
+                "original": "https://img.olx.com.br/images/98/986006018340946.jpg",
+                "originalAlt": "Fazenda para soja - Foto 5",
+                "thumbnail": "https://img.olx.com.br/thumbs/98/986006018340946.jpg"
+            },
+            {
+                "original": "https://img.olx.com.br/images/98/985006014794993.jpg",
+                "originalAlt": "Fazenda para soja - Foto 6",
+                "thumbnail": "https://img.olx.com.br/thumbs/98/985006014794993.jpg"
+            },
+            {
+                "original": "https://img.olx.com.br/images/98/987006016129066.jpg",
+                "originalAlt": "Fazenda para soja - Foto 7",
+                "thumbnail": "https://img.olx.com.br/thumbs/98/987006016129066.jpg"
+            },
+            {
+                "original": "https://img.olx.com.br/images/98/982006013467203.jpg",
+                "originalAlt": "Fazenda para soja - Foto 8",
+                "thumbnail": "https://img.olx.com.br/thumbs/98/982006013467203.jpg"
+            },
+            {
+                "original": "https://img.olx.com.br/images/98/987006011817909.jpg",
+                "originalAlt": "Fazenda para soja - Foto 9",
+                "thumbnail": "https://img.olx.com.br/thumbs/98/987006011817909.jpg"
+            },
+            {
+                "original": "https://img.olx.com.br/images/98/982006012911421.jpg",
+                "originalAlt": "Fazenda para soja - Foto 10",
+                "thumbnail": "https://img.olx.com.br/thumbs/98/982006012911421.jpg"
+            }
+        ],
+        "location": {
+            "address": null,
+            "neighbourhood": "Setor Oeste",
+            "neighbourhoodId": 27194,
+            "municipality": "Redenção",
+            "municipalityId": 4286,
+            "zipcode": "68552390",
+            "mapLati": 0,
+            "mapLong": 0,
+            "uf": "PA",
+            "ddd": "94",
+            "zoneId": 11200,
+            "zone": "todas-as-cidades",
+            "region": "Marabá e região, PA"
+        },
+        "properties": [
+            {
+                "name": "category",
+                "label": "Categoria",
+                "value": "Terrenos, sítios e fazendas",
+                "values": null,
+                "url": "https://pa.olx.com.br/regiao-de-maraba/todas-as-cidades/terrenos"
+            },
+            {
+                "name": "real_estate_type",
+                "label": "Tipo",
+                "value": "Fazendas",
+                "values": null,
+                "url": null
+            },
+            {
+                "name": "condominio",
+                "label": "Condomínio",
+                "value": "R$ 1",
+                "values": null,
+                "url": null
+            },
+            {
+                "name": "iptu",
+                "label": "IPTU",
+                "value": "R$ 1",
+                "values": null,
+                "url": null
+            },
+            {
+                "name": "size",
+                "label": "Tamanho",
+                "value": "380m²",
+                "values": null,
+                "url": null
+            }
+        ],
+        "pubSpecificData": [
+            {
+                "context": "width=300,height=250",
+                "data": [
+                    {
+                        "key": "appnexus_placement_id",
+                        "value": "11647443"
+                    },
+                    {
+                        "key": "aol_placement_id",
+                        "value": "4349217,4349221"
+                    },
+                    {
+                        "key": "criteo_zone_id",
+                        "value": "802888"
+                    }
+                ]
+            },
+            {
+                "context": "width=*,height=*",
+                "data": [
+                    {
+                        "key": "afsh_channel_id",
+                        "value": null
+                    },
+                    {
+                        "key": "afsh_pub_id",
+                        "value": "partner-vert-pla-olx-pdp"
+                    }
+                ]
+            }
+        ],
+        "trackingSpecificData": [
+            {
+                "key": "region",
+                "value": "Região de Marabá"
+            }
+        ],
+        "searchboxes": [
+            {
+                "label": "Apartamentos para alugar",
+                "link": "https://pa.olx.com.br/regiao-de-maraba/todas-as-cidades/imoveis/aluguel/apartamentos"
+            },
+            {
+                "label": "Apartamentos para alugar em RJ",
+                "link": "https://rj.olx.com.br/imoveis/aluguel/apartamentos"
+            },
+            {
+                "label": "Apartamentos para alugar em SP",
+                "link": "https://sp.olx.com.br/imoveis/aluguel/apartamentos"
+            },
+            {
+                "label": "Apartamentos para temporada",
+                "link": "https://pa.olx.com.br/regiao-de-maraba/todas-as-cidades/temporada/apartamentos"
+            },
+            {
+                "label": "Apartamentos à venda",
+                "link": "https://pa.olx.com.br/regiao-de-maraba/todas-as-cidades/imoveis/venda/apartamentos"
+            },
+            {
+                "label": "Apartamentos à venda em RJ",
+                "link": "https://rj.olx.com.br/imoveis/venda/apartamentos"
+            },
+            {
+                "label": "Apartamentos à venda em SP",
+                "link": "https://sp.olx.com.br/imoveis/venda/apartamentos"
+            },
+            {
+                "label": "Casas para alugar",
+                "link": "https://pa.olx.com.br/regiao-de-maraba/todas-as-cidades/imoveis/aluguel/casas"
+            },
+            {
+                "label": "Casas para alugar em RJ",
+                "link": "https://rj.olx.com.br/imoveis/aluguel/casas"
+            },
+            {
+                "label": "Casas para alugar em SP",
+                "link": "https://sp.olx.com.br/imoveis/aluguel/casas"
+            },
+            {
+                "label": "Casas para temporada",
+                "link": "https://pa.olx.com.br/regiao-de-maraba/todas-as-cidades/temporada/casas"
+            },
+            {
+                "label": "Casas à venda",
+                "link": "https://pa.olx.com.br/regiao-de-maraba/todas-as-cidades/imoveis/venda/casas"
+            },
+            {
+                "label": "Casas à venda em RJ",
+                "link": "https://rj.olx.com.br/imoveis/venda/casas"
+            },
+            {
+                "label": "Casas à venda em SP",
+                "link": "https://sp.olx.com.br/imoveis/venda/casas"
+            },
+            {
+                "label": "Fazendas para alugar",
+                "link": "https://pa.olx.com.br/regiao-de-maraba/todas-as-cidades/terrenos/fazendas/aluguel"
+            },
+            {
+                "label": "Fazendas à venda",
+                "link": "https://pa.olx.com.br/regiao-de-maraba/todas-as-cidades/terrenos/fazendas/compra"
+            },
+            {
+                "label": "Lançamentos",
+                "link": "https://pa.olx.com.br/regiao-de-maraba/todas-as-cidades/lancamentos/lancamentos"
+            },
+            {
+                "label": "Lojas para alugar",
+                "link": "https://pa.olx.com.br/regiao-de-maraba/todas-as-cidades/comercio-e-industria/aluguel"
+            },
+            {
+                "label": "Lojas à venda",
+                "link": "https://pa.olx.com.br/regiao-de-maraba/todas-as-cidades/comercio-e-industria/compra"
+            },
+            {
+                "label": "Quartos para alugar",
+                "link": "https://pa.olx.com.br/regiao-de-maraba/todas-as-cidades/imoveis/aluguel/aluguel-de-quartos"
+            },
+            {
+                "label": "Sítios para alugar",
+                "link": "https://pa.olx.com.br/regiao-de-maraba/todas-as-cidades/terrenos/sitios-e-chacaras/aluguel"
+            },
+            {
+                "label": "Sítios à venda",
+                "link": "https://pa.olx.com.br/regiao-de-maraba/todas-as-cidades/terrenos/sitios-e-chacaras/compra"
+            },
+            {
+                "label": "Terrenos para alugar",
+                "link": "https://pa.olx.com.br/regiao-de-maraba/todas-as-cidades/terrenos/lotes/aluguel"
+            },
+            {
+                "label": "Terrenos à venda",
+                "link": "https://pa.olx.com.br/regiao-de-maraba/todas-as-cidades/terrenos/lotes/compra"
+            }
+        ],
+        "breadcrumbUrls": [
+            {
+                "label": "Pará",
+                "url": "https://pa.olx.com.br"
+            },
+            {
+                "label": "Região de Marabá",
+                "url": "https://pa.olx.com.br/regiao-de-maraba"
+            },
+            {
+                "label": "Terrenos, sítios e fazendas",
+                "url": "https://pa.olx.com.br/regiao-de-maraba/terrenos"
+            },
+            {
+                "label": "Todas as cidades",
+                "url": "https://pa.olx.com.br/regiao-de-maraba/todas-as-cidades/terrenos"
+            },
+            {
+                "label": "Redenção",
+                "url": "https://pa.olx.com.br/regiao-de-maraba/todas-as-cidades/redencao/terrenos"
+            }
+        ],
+        "tags": null,
+        "carSpecificData": null,
+        "description": "Área de 380 hectares totalmente plana e enxuta , própria para soja, planta se em 90% da área. <br>Já foi plantado em 150 hectares.<br>Localizada à 32 km de redenção e próximo a grandes plantadores, região de safrinha.<br>Valor 6 200,00 Por hectare. <br>Possibilidade de aumento da área",
+        "price": "R$ 2.356.000",
+        "listTime": "2020-02-24T20:56:54.000Z",
+        "locationProperties": [
+            {
+                "label": "CEP",
+                "value": "68552390"
+            },
+            {
+                "label": "Município",
+                "value": "Redenção"
+            },
+            {
+                "label": "Bairro",
+                "value": "Setor Oeste"
+            }
+        ],
+        "securityTips": [
+            "Não faça pagamentos antes de verificar o que está sendo anunciado.",
+            "Fique atento com excessos de facilidades e preços abaixo do mercado.",
+            "Busque locais públicos e movimentados para suas negociações."
+        ],
+        "slotsId": [
+            "adBottomLocation"
+        ],
+        "denounceLink": "https://denuncia.olx.com.br/report?from=web&data=eyJsaXN0SWQiOjcxNDkxMDMxNSwidGl0bGUiOiJGYXplbmRhIHBhcmEgc29qYSIsInByaWNlIjoiMjM1NjAwMCJ9",
+        "nativeVas": [],
+        "isNativeVasTestAbEnabled": false,
+        "isFeatured": true
+    },
+    "urls": {
+        "CHAT_URL": "https://m.olx.com.br/anuncio/chat?ad_id=",
+        "CARTEIRO_SERVICE_URL": "https://apigw.olx.com.br/v1/seller/email",
+        "POINTS_OF_SALE_URL": "https://pointsofsales.olx.com.br",
+        "AUTH_URL": "https://apigw.olx.com.br/auth/v1/accounts/my",
+        "AUTH_ACCESS_KEY": "kkUAvgIi7zuGcj3j18dJSjeq5nnzPv9Z",
+        "GOLLUM_URL": "https://gollum.olx.com.br/api/v1/my-precious",
+        "FAVORITES_API_URL": "https://apigw.olx.com.br/cdhv/favorite/api/v1",
+        "FAVORITES_API_SECRET": "xobt1DEOn8CblfaIFx5Ul5TNI0bKrZ0i",
+        "MY_ACCOUNTS_API_URL": "https://apigw.olx.com.br/v3/me",
+        "MY_ACCOUNTS_API_SECRET": "rZNX9XwMdF9ZY7deAzKEJEvQ5cC7JOgQ",
+        "PHONE_RANGER_API_URL": "https://apigw.olx.com.br/v1/showphone"
+    },
+    "abTestGroups": "advAfshNativo_A.ast-showphone-flow_new.bj-HelpMeDecide_SellerOnlineTitle.bj-listItemOpenInANewTab_A.fixedBar2_box.mfg-autos-market-place-selected-options_early.mfg-autos-market-place_control.payments-boletoProgressButton_A.upr-chat-adview-profilelink_A.upr-chat-listing-profilelink_A.uprNewMiniProfile_control.uprNewMonthActivityRule_control"
+}
+{
+    "1": {
+        "Município": "Redenção",
+        "Estado": "PA",
+        "CEP": "68552390",
+        "Preço": "R$ 2.356.000",
+        "Área (tamanho do terreno)": "380m²",
+        "Tipo": "Fazendas",
+        "Título": "Fazenda para soja",
+        "Descrição": "Área de 380 hectares totalmente plana e enxuta , própria para soja, planta se em 90% da área. <br>Já foi plantado em 150 hectares.<br>Localizada à 32 km de redenção e próximo a grandes plantadores, região de safrinha.<br>Valor 6 200,00 Por hectare. <br>Possibilidade de aumento da área",
+        "Fotos": [
+            "https://img.olx.com.br/images/98/983006011841018.jpg",
+            "https://img.olx.com.br/images/98/983006013744481.jpg",
+            "https://img.olx.com.br/images/98/980006012793056.jpg",
+            "https://img.olx.com.br/images/98/988006015861902.jpg",
+            "https://img.olx.com.br/images/98/986006018340946.jpg",
+            "https://img.olx.com.br/images/98/985006014794993.jpg",
+            "https://img.olx.com.br/images/98/987006016129066.jpg",
+            "https://img.olx.com.br/images/98/982006013467203.jpg",
+            "https://img.olx.com.br/images/98/987006011817909.jpg",
+            "https://img.olx.com.br/images/98/982006012911421.jpg"
+        ],
+        "Informações de Contato": "",
+        "URL de onde foi coletado o anúncio": "https://pa.olx.com.br/regiao-de-maraba/terrenos/fazenda-para-soja-714910315",
+        "Código do anúncio": 1,
+        "data e hora da publicação do anúncio": "2020-02-24T20:56:54.000Z",
+        "Indicação se o anúncio é profissional": false
+    }
+}

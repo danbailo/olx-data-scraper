@@ -3,6 +3,7 @@ import requests
 import json
 import re
 import time
+from tqdm import tqdm
 
 headers = {
     'authority': 'www.olx.com.br',
@@ -19,17 +20,14 @@ headers = {
 }
 
 class Olx:
-    def __init__(self, file):
+    def __init__(self):
         self.__base_url = "https://www.olx.com.br"
-        self.file = file
-        self.data = []
-        self.pages = {}
         self.pages_pattern = re.compile(r"(.*\?o=)(\d+)(.*)")
-        self.id_links = 0
 
-    def get_urn(self): #pega as extensoes do txt
-        file = open(self.file, "r")
+    def get_urn(self, input_file): #pega as extensoes do txt
+        file = open(input_file, "r")
         all_urn = [urn.replace("\n", "") for urn in file.readlines()]
+        file.close()
         return all_urn
 
     def get_pages(self, all_urn): #a partir das extensoes do txt, pega da page 1 ate a ultima
@@ -93,11 +91,8 @@ class Olx:
         id_announcement = json_data["ad"]["listId"]
 
         municipality = json_data["ad"]["location"]["municipality"]
-
         state = json_data["ad"]["location"]["uf"]
-
         zipcode = json_data["ad"]["location"]["zipcode"]
-
         price = json_data["ad"]["priceValue"]
 
         lenght = ""
@@ -111,20 +106,16 @@ class Olx:
                 type_ = type_properties["value"]   
 
         title = json_data["ad"]["subject"]         
-
         description = json_data["ad"]["description"]
-
-        imgs = [img["original"] for img in json_data["ad"]["images"]]
-
+        try:
+            imgs = [img["original"] for img in json_data["ad"]["images"]]
+        except KeyError:
+            imgs = []
         phone = json_data["ad"]["phone"]["phone"]
-
         ddd = json_data["ad"]["location"]["ddd"]
-        
         url = json_data["ad"]["friendlyUrl"]
-
         date_hour = json_data["ad"]["listTime"]
-
-        professional = json_data["ad"]["professionalAd"]
+        professional = json_data["ad"]["professionalAd"]      
 
         return (
             id_announcement,

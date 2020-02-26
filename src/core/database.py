@@ -1,5 +1,6 @@
 import psycopg2
 import re
+from tqdm import trange
 
 class Database:    
     def __init__(self, dbname, user, password):
@@ -19,7 +20,7 @@ class Database:
                     preco NUMERIC(14,2),
                     area VARCHAR(16),
                     tipo VARCHAR(32),
-                    titulo VARCHAR(64),
+                    titulo TEXT,
                     descricao TEXT,
                     fotos TEXT [],
                     ddd CHAR(2),
@@ -33,27 +34,31 @@ class Database:
         self.conn.commit()
 
     def insert_data(self, data):
-        for values in data.values():
-            print(values["area"])
+        for i in trange(len(data)):
+            try:
+                new_price = re.sub(r"(R\$\s|\.)", "", data[i]["preco"])
+            except TypeError:
+                new_price = "0"
             self.cur.execute("""
                 INSERT INTO mytable (id_anuncio, municipio, estado, cep, preco, area, tipo, titulo, descricao, fotos, ddd, telefone, url, data, profissional)
-                VALUES(%s, %s, %s, %s, %s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s, %s ,%s);""",
-                (values["id_anuncio"],
-                values["municipio"],
-                values["estado"],
-                values["cep"],
-                re.sub(r"(R\$\s|\.)", "", values["preco"]),
-                values["area"],
-                values["tipo"],
-                values["titulo"],
-                values["descricao"],
-                values["fotos"],
-                values["ddd"],
-                values["telefone"],
-                values["url"],
-                values["data"],
-                values["profissional"])
+                VALUES(%s, %s, %s, %s, %s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s, %s ,%s) ON CONFLICT (id_anuncio) DO NOTHING;""",
+                (data[i]["id_anuncio"],
+                data[i]["municipio"],
+                data[i]["estado"],
+                data[i]["cep"],
+                new_price,
+                data[i]["area"],
+                data[i]["tipo"],
+                data[i]["titulo"],
+                data[i]["descricao"],
+                data[i]["fotos"],
+                data[i]["ddd"],
+                data[i]["telefone"],
+                data[i]["url"],
+                data[i]["data"],
+                data[i]["profissional"])
             )
+        self.conn.commit()
 
     def __del__(self):
         self.cur.close()

@@ -129,8 +129,8 @@ class Olx:
 
         professional = json_data["ad"]["professionalAd"]
 
-        if self.id_data not in self.data.keys():
-            self.data[self.id_data] = {
+        if id_announcement not in self.data.keys():
+            self.data[id_announcement] = {
                 "id_anuncio": id_announcement,
                 "municipio": municipality,
                 "estado": state,

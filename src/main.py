@@ -34,14 +34,21 @@ if __name__ == "__main__":
 
     print("Coletando dados dos anuncios...")
     start_collect = time.time() #TIMER
-    pool.map(olx.get_json, links.values())
+    pool.imap(olx.get_json, links.values())
     end_collect = time.time() #TIMER
     print("Dados coletados!\n")
     print("time collect\n:", end_collect-start_collect)
+    del pool
 
     print(len(olx.data))
+
+    a = set()
+    for tst in olx.data.values():
+        a.add(tst["id_anuncio"])
     
-    del pool
+    print(len(a))
+
+    #pedir ajuda pro giu pra saber como eu posso coletar os dados sem duplicar as entradas por causa das threads
     
     print("Inserindo dados no banco...")
     db.insert_data(list(olx.data.values()))

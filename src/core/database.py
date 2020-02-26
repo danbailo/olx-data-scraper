@@ -41,8 +41,7 @@ class Database:
                 new_price = "0"
             self.cur.execute("""
                 INSERT INTO mytable (id_anuncio, municipio, estado, cep, preco, area, tipo, titulo, descricao, fotos, ddd, telefone, url, data, profissional)
-                VALUES(%s, %s, %s, %s, %s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s, %s ,%s);""",                
-                #VALUES(%s, %s, %s, %s, %s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s, %s ,%s) ON CONFLICT (id_anuncio) DO NOTHING;""",                
+                VALUES(%s, %s, %s, %s, %s ,%s ,%s ,%s ,%s ,%s ,%s ,%s ,%s, %s ,%s) ON CONFLICT (id_anuncio) DO NOTHING;""",                
                 (data[i]["id_anuncio"],
                 data[i]["municipio"],
                 data[i]["estado"],

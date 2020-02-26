@@ -7,7 +7,7 @@ from multiprocessing import Pool
 
 if __name__ == "__main__":
 
-    input_file = os.path.join(".", "input.txt")
+    input_file = os.path.join("..", "input.txt")
     database = Database("mydb", "postgres", "59228922ddd")
 
     olx = Olx()

@@ -31,7 +31,7 @@ if __name__ == "__main__":
     print("{len_links} Anuncios coletados!".format(len_links=len(links)))
     print("time to get links:", end_links-start_links)
 
-    pool = ThreadPool(32)
+    pool = ThreadPool(16)
 
     print("\nColetando dados dos anuncios...")
     start_collect = time.time() #TIMER
@@ -41,6 +41,16 @@ if __name__ == "__main__":
     print("time collect", end_collect-start_collect)
 
     del pool
+
+    print(len(olx.data))
+
+    a = set()
+    for tst in olx.data:
+        a.add(tst[0])
+    
+    print(len(a))
+
+    exit()
     
     print("\nInserindo dados no banco...")
     db.insert_data(olx.data)

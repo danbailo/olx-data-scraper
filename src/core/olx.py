@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import json
 import re
+import time
 
 headers = {
     'authority': 'www.olx.com.br',
@@ -70,13 +71,25 @@ class Olx:
     ################################################################################################################
 
     def get_json(self, links):
-        response = requests.get(links, headers=headers)
+        request_error = 0
+        while True:
+            try:
+                response = requests.get(links, headers=headers)
+                break
+            except Exception:
+                print("Sleeping... 1sec")
+                time.sleep(1)
+                request_error += 1
+                if request_error >= 10:
+                    print("Request error, tries exceeded!")
+                    return False
+                    
         soup = BeautifulSoup(response.text, "html.parser")
         try:
             script_tag = soup.find("script", attrs={"data-json":re.compile(".*")}).get("data-json")
         except AttributeError:
             print("error")
-            return False
+            return self.get_json(links)
         json_data = json.loads(script_tag)
 
         id_announcement = json_data["ad"]["listId"]

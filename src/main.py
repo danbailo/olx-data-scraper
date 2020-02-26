@@ -5,17 +5,25 @@ import json
 if __name__ == "__main__":
     
     path = os.path.join(".", "input.txt")
-
-    olx = Olx(path)
-
     db = Database("mydb", "postgres", "59228922ddd")
 
+    olx = Olx(path)
     all_urn = olx.get_urn()
-    links = olx.get_links(all_urn)
+    pages = olx.get_pages(all_urn)
+    links = olx.get_links(pages)
 
-    print("Colentado dados...")
+    print(*links.items(), sep="\n")
+
+    print(len(links))
+
+    exit()
+
+    print("\nColetando dados...")
     olx.get_json(links)
+    print("Dados coletados!\n")
 
-    print(json.dumps(olx.data, indent=4, ensure_ascii=False))
-
-    db.insert_data(olx.data)
+    print("Inserindo dados no banco...")
+    db.insert_data(list(olx.data.values()))
+    print("Dados inseridos!")
+    
+    

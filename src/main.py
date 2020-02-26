@@ -27,7 +27,7 @@ if __name__ == "__main__":
     end_links = time.time() #TIMER
 
     del pool   
-    print("{len_links} Anuncios coletados!\n".format(len_links=len(links)))
+    print("{len_links} Links coletados!\n".format(len_links=len(links)))
     print("time to get links:", end_links-start_links)
 
     pool = ThreadPool(32)
@@ -35,10 +35,12 @@ if __name__ == "__main__":
     print("Coletando dados dos anuncios...")
     start_collect = time.time() #TIMER
     pool.map(olx.get_json, links.values())
-    end_collect= time.time() #TIMER
+    end_collect = time.time() #TIMER
     print("Dados coletados!\n")
     print("time collect\n:", end_collect-start_collect)
 
+    print(len(olx.data))
+    
     del pool
     
     print("Inserindo dados no banco...")

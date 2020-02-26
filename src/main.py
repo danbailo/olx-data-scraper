@@ -2,7 +2,6 @@ from core import Olx, Database
 import os
 import json
 import time
-from multiprocessing.pool import ThreadPool
 from multiprocessing import Pool
 
 if __name__ == "__main__":
@@ -12,48 +11,42 @@ if __name__ == "__main__":
 
     olx = Olx(path)
 
-    
     all_urn = olx.get_urn()
 
-    print("\nColetando paginas dos anuncios...")
+
+    print("\nColetando todas as paginas...")
     pages = olx.get_pages(all_urn)
-    print("{len_pages} Paginas coletadas!\n".format(len_pages=len(pages)))
+    print("{len_pages} Paginas coletadas!".format(len_pages=len(pages)))
 
-    print("Coletando links de todos os anuncios...")
-    pool = ThreadPool(10)
+    print("\nColetando links de todos os anuncios...")
+    pool = Pool(8)
     start_links = time.time() #TIMER
-    links = {}
+    links = []
     for link in pool.map(olx.get_links, pages):
-        links.update(link)
+        links.extend(link)
+    pool.close()
+    pool.join()        
     end_links = time.time() #TIMER
-
     del pool   
-    print("{len_links} Anuncios coletados!".format(len_links=len(links)))
+
+    print("{len_links} Links coletados!\n".format(len_links=len(links)))
     print("time to get links:", end_links-start_links)
 
-    pool = ThreadPool(32)
+    pool = Pool(32)
 
     print("\nColetando dados dos anuncios...")
     start_collect = time.time() #TIMER
-    pool.map(olx.get_json, links.values())
-    end_collect= time.time() #TIMER
-    print("Dados coletados!")
-    print("time collect", end_collect-start_collect)
+    data = pool.map(olx.get_json, links)
+    pool.close()
+    pool.join()
+    end_collect = time.time() #TIMER
+    print("Dados coletados!\n")
+    print("time collect:", end_collect-start_collect)
 
     del pool
 
-    print(len(olx.data))
-
-    a = set()
-    for tst in olx.data:
-        a.add(tst[0])
-    
-    print(len(a))
-
-    exit()
-    
     print("\nInserindo dados no banco...")
-    db.insert_data(olx.data)
+    db.insert_data(data)
     print("Dados inseridos!\n")
     
     

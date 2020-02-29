@@ -23,6 +23,7 @@ class Olx:
     def __init__(self):
         self.__base_url = "https://www.olx.com.br"
         self.pages_pattern = re.compile(r"(.*\?o=)(\d+)(.*)")
+        self.unique_id = 0
 
     def get_urn(self, input_file): #pega as extensoes do txt
         file = open(input_file, "r")
@@ -36,8 +37,8 @@ class Olx:
             uri = self.__base_url + urn
             response = requests.get(uri, headers=headers)
             if not response.ok:
-                print("Request error!")
-                return False
+                print("Erro de requisição, verifique se os links estão corretos e tente novamente!")
+                exit()
             soup = BeautifulSoup(response.text, "html.parser")
             last_page_link = soup.find("a", attrs={"title": "Última página"}).get("href")
             first, last_page, second = self.pages_pattern.match(last_page_link).groups()
@@ -46,24 +47,27 @@ class Olx:
         return all_pages
 
     def get_links(self, pages): #coleta os links de cada anuncio de todas as paginas
-        links = []
+        links = {}
+        # links = []
         request_error = 0
         while True:
             try:
                 response = requests.get(pages, headers=headers)
                 if not response.ok:
-                    print("Request error!")
-                    return False
+                    print("Erro de requisição, verifique se os links estão corretos e tente novamente!")
+                    exit()
                 soup = BeautifulSoup(response.text, "html.parser")
                 ul = soup.find("ul", attrs={"id": "main-ad-list"})
                 for link in ul.find_all("a"):
-                    links.append(link.get("href"))
+                    links[self.unique_id] = link.get("href")
+                    self.unique_id += 1
+                    # links.append((link.get("data-lurker_list_id"), link.get("href")))
                 break
             except Exception as err:
                 print(err)
                 request_error += 1
-                if request_error >= 10:
-                    print("Request error, tries exceeded!")
+                if request_error >= 30:
+                    #print("Request error, tries exceeded!")
                     return False
         return links
 
@@ -74,17 +78,17 @@ class Olx:
                 response = requests.get(links, headers=headers)
                 break
             except Exception:
-                print("Sleeping... 1sec")
+                #print("Sleeping... 1sec")
                 time.sleep(1)
                 request_error += 1
-                if request_error >= 10:
-                    print("Request error, tries exceeded!")
+                if request_error >= 30:
+                    #print("Request error, tries exceeded!")
                     return False
         soup = BeautifulSoup(response.text, "html.parser")
         try:
             script_tag = soup.find("script", attrs={"data-json":re.compile(".*")}).get("data-json")
         except AttributeError:
-            print("error")
+            #print("error")
             return self.get_json(links)
         json_data = json.loads(script_tag)
 

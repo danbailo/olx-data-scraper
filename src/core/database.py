@@ -13,7 +13,7 @@ class Database:
         self.conn.autocommit = True
         self.cur = self.conn.cursor()
         self.cur.execute("""
-                CREATE TABLE IF NOT EXISTS mytable (
+                CREATE TABLE IF NOT EXISTS dados_olx (
                     id_anuncio BIGINT,
                     municipio VARCHAR(64),
                     estado CHAR(2),
@@ -41,7 +41,6 @@ class Database:
                 municipio = data[i][1]
                 estado = data[i][2]
                 cep = data[i][3]
-                preco = re.sub(r"(R\$\s|\.)", "", data[i][4])
                 area = data[i][5]
                 tipo = data[i][6]
                 titulo = data[i][7]
@@ -52,10 +51,11 @@ class Database:
                 url = data[i][12]
                 data_ = data[i][13]
                 profissional = data[i][14]
+                preco = re.sub(r"(R\$\s|\.)", "", data[i][4])
             except TypeError:
                 preco = "0"
             self.cur.execute("""
-                INSERT INTO mytable 
+                INSERT INTO dados_olx 
                 (id_anuncio, municipio, estado, cep, preco, area, tipo, titulo, descricao, fotos, ddd, telefone, url, data, profissional) 
                 VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) ON CONFLICT (id_anuncio) 
                 DO UPDATE SET 
@@ -67,6 +67,6 @@ class Database:
             )
         self.conn.commit()
 
-    def __del__(self):
+    def close(self):
         self.cur.close()
         self.conn.close()

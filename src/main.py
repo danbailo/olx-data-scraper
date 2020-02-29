@@ -36,14 +36,8 @@ if __name__ == "__main__":
             print("{len_pages} Páginas coletadas!".format(len_pages=len(pages)))
 
             print("\nColetando os links de cada anúncio nas páginas coletadas...")
-            thread_pool = Pool(8)
-            links = {}
-            for link in thread_pool.map(olx.get_links, pages):
-                links.update(link)
+            links = olx.get_links(pages)
 
-            thread_pool.close()
-            thread_pool.join()        
-            del thread_pool   
             print("{len_links} Links coletados!".format(len_links=len(links)))
             olx.unique_id = 0
 

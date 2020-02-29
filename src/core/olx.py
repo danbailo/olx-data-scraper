@@ -23,7 +23,6 @@ class Olx:
     def __init__(self):
         self.__base_url = "https://www.olx.com.br"
         self.pages_pattern = re.compile(r"(.*\?o=)(\d+)(.*)")
-        self.unique_id = 0
 
     def get_urn(self, input_file): #pega as extensoes do txt
         file = open(input_file, "r")
@@ -48,7 +47,6 @@ class Olx:
 
     def get_links(self, pages): #coleta os links de cada anuncio de todas as paginas
         links = {}
-        # links = []
         request_error = 0
         while True:
             try:
@@ -60,14 +58,11 @@ class Olx:
                 ul = soup.find("ul", attrs={"id": "main-ad-list"})
                 for link in ul.find_all("a"):
                     links[link.get("data-lurker_list_id")] = link.get("href")
-                    self.unique_id += 1
-                    # links.append((link.get("data-lurker_list_id"), link.get("href")))
                 break
             except Exception as err:
                 print(err)
                 request_error += 1
                 if request_error >= 30:
-                    #print("Request error, tries exceeded!")
                     return False
         return links
 
@@ -78,17 +73,14 @@ class Olx:
                 response = requests.get(links, headers=headers)
                 break
             except Exception:
-                #print("Sleeping... 1sec")
                 time.sleep(1)
                 request_error += 1
                 if request_error >= 30:
-                    #print("Request error, tries exceeded!")
                     return False
         soup = BeautifulSoup(response.text, "html.parser")
         try:
             script_tag = soup.find("script", attrs={"data-json":re.compile(".*")}).get("data-json")
         except AttributeError:
-            #print("error")
             return self.get_json(links)
         json_data = json.loads(script_tag)
 

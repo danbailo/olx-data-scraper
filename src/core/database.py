@@ -4,15 +4,21 @@ from tqdm import trange
 import unicodedata
 
 class Database:    
-    def __init__(self, dbname, user, password):
-        self.conn = psycopg2.connect(
-            dbname=dbname,
-            user=user,
-            password=password,
-            host="localhost")
-        self.conn.autocommit = True
-        self.cur = self.conn.cursor()
-        self.cur.execute("""
+    def __init__(self, database, user, password, host):
+        self.database = database
+        self.user = user
+        self.password = password
+        self.host = host
+
+    def connect(self):
+        return psycopg2.connect(
+            dbname=self.database,
+            user=self.user,
+            password=self.password,
+            host=self.host)
+        
+    def create_table(self, cursor):
+        cursor.execute("""
                 CREATE TABLE IF NOT EXISTS dados_olx (
                     id_anuncio BIGINT,
                     municipio VARCHAR(64),
@@ -31,10 +37,9 @@ class Database:
                     profissional BOOL,
                     PRIMARY KEY (id_anuncio)
                 ); """
-            )
-        self.conn.commit()
+            )        
 
-    def insert_data(self, data):
+    def insert_data(self, cursor, data):
         for i in trange(len(data)):
             try:
                 id_anuncio = data[i][0]
@@ -54,7 +59,7 @@ class Database:
                 preco = re.sub(r"(R\$\s|\.)", "", data[i][4])
             except TypeError:
                 preco = "0"
-            self.cur.execute("""
+            cursor.execute("""
                 INSERT INTO dados_olx 
                 (id_anuncio, municipio, estado, cep, preco, area, tipo, titulo, descricao, fotos, ddd, telefone, url, data, profissional) 
                 VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) ON CONFLICT (id_anuncio) 
@@ -65,8 +70,7 @@ class Database:
                 EXCLUDED.descricao, EXCLUDED.fotos, EXCLUDED.ddd, EXCLUDED.telefone, EXCLUDED.url, EXCLUDED.data, EXCLUDED.profissional);""",
                 (id_anuncio, municipio, estado, cep, preco, area, tipo, titulo, descricao, fotos, ddd, telefone, url, data_, profissional)
             )
-        self.conn.commit()
 
-    def close(self):
-        self.cur.close()
-        self.conn.close()
+    def close(self, cursor, connection):
+        cursor.close()
+        connection.close()

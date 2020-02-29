@@ -59,7 +59,7 @@ class Olx:
                 soup = BeautifulSoup(response.text, "html.parser")
                 ul = soup.find("ul", attrs={"id": "main-ad-list"})
                 for link in ul.find_all("a"):
-                    links[self.unique_id] = link.get("href")
+                    links[link.get("data-lurker_list_id")] = link.get("href")
                     self.unique_id += 1
                     # links.append((link.get("data-lurker_list_id"), link.get("href")))
                 break

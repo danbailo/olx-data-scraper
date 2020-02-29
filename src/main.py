@@ -36,30 +36,23 @@ if __name__ == "__main__":
             print("{len_pages} Páginas coletadas!".format(len_pages=len(pages)))
 
             print("\nColetando os links de cada anúncio nas páginas coletadas...")
-            pool = ThreadPool(1)
-            links = []
-            for link in pool.map(olx.get_links, pages):
-                links.extend(link)
-            
-            set_id = set()
-            links_unique = []
-            for id_link in links:
-                set_id.add(id_link[0])
+            thread_pool = Pool(8)
+            links = {}
+            for link in thread_pool.map(olx.get_links, pages):
+                links.update(link)
 
-            print(len(set_id))
-            exit()
-
-            pool.close()
-            pool.join()        
-            del pool   
+            thread_pool.close()
+            thread_pool.join()        
+            del thread_pool   
             print("{len_links} Links coletados!".format(len_links=len(links)))
+            olx.unique_id = 0
 
-            pool = Pool(32)
+            process_pool = Pool(32)
             print("\nExtraindo os dados dos anúncios...")
-            data = pool.map(olx.get_json, tqdm(links))
-            pool.close()
-            pool.join()
-            del pool
+            data = process_pool.map(olx.get_json, tqdm(links.values()))
+            process_pool.close()
+            process_pool.join()
+            del process_pool
             print("Dados extraidos!")
 
             print("\nInserindo dados no banco...")
@@ -69,13 +62,6 @@ if __name__ == "__main__":
             set_data = set()
             for row in data:
                 set_data.add(row[0])
-
-            # tst = sorted(data, key=lambda param: param[0])
-
-            # for dp_value in sorted(set_data):
-            #     for row in data:
-            #         if dp_value == row[0]:
-            #             print(row[0], row[-3])
 
             print("\nForam inseridos {set_data} tuplas na base dados!".format(set_data=len(set_data)))
             print("{duplicate} anúncios duplicados no total!\n".format(duplicate=len(data) - len(set_data)))

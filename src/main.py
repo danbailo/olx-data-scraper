@@ -16,8 +16,10 @@ if __name__ == "__main__":
     first_exec = True
     count_exec = 1
 
-    database = Database("mydb", "postgres", "59228922ddd", "localhost")
+    database = Database()
     olx = Olx()
+
+    print(database.get_config())
 
     if not os.path.isdir(os.path.join("..","imgs")):
         os.mkdir(os.path.join("..","imgs"))
@@ -25,9 +27,16 @@ if __name__ == "__main__":
     try:
         while True:
             input_file = os.path.join("..", "input.txt")
+
             config = get_config()
             days = config[0]
             download_opt = config[1].upper()
+            
+            db_config = database.get_config()
+            db = db_config[0]
+            user = db_config[1]
+            password = db_config[2]
+            host =db_config[3]
 
             print("\n# Pressione ctrl+c para finalizar o programa!\n")
             print("Execução nº {n_exec}".format(n_exec=colored(str(count_exec), "yellow")))
@@ -72,7 +81,7 @@ if __name__ == "__main__":
             del data_pool
             print("Dados extraidos!")
 
-            connect = database.connect()
+            connect = database.connect(db, user, password, host)
             connect.autocommit = True
             cursor = connect.cursor()
 

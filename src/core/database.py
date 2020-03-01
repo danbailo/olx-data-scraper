@@ -1,21 +1,25 @@
+from tqdm import trange
 import psycopg2
 import re
-from tqdm import trange
-import unicodedata
+import os
 
-class Database:    
-    def __init__(self, database, user, password, host):
-        self.database = database
-        self.user = user
-        self.password = password
-        self.host = host
+class Database:
 
-    def connect(self):
+    def get_config(self, config = os.path.join("db_config.txt")):
+        pattern_config = re.compile(r"(.*\:\s)(.*)")
+        with open(config, "r") as file:
+            options = []
+            for line in file:
+                info = pattern_config.match(line)[2]
+                options.append(info)
+        return options        
+
+    def connect(self, database, user, password, host):
         return psycopg2.connect(
-            dbname=self.database,
-            user=self.user,
-            password=self.password,
-            host=self.host)
+            dbname=database,
+            user=user,
+            password=password,
+            host=host)
         
     def create_table(self, cursor):
         cursor.execute("""

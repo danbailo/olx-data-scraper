@@ -5,7 +5,7 @@ import os
 
 class Database:
 
-    def get_config(self, config = os.path.join("db_config.txt")):
+    def get_config(self, config = os.path.join(".","db_config.txt")):
         pattern_config = re.compile(r"(.*\:\s)(.*)")
         with open(config, "r") as file:
             options = []

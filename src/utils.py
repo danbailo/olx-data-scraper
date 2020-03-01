@@ -1,6 +1,11 @@
-import urllib.request
+from PIL import Image
+import requests
+import warnings
+import io
 import os
 import re
+
+warnings.filterwarnings("ignore")
 
 def get_config(config = os.path.join(".", "config.txt")):
     pattern_options = re.compile(r"(.*\:\s|.*\:)(.*?)((\s\#.*)|(\#.*))")
@@ -18,5 +23,7 @@ def download_imgs(data):
     for i in range(len(data[9])):
         if not os.path.isdir(os.path.join(".", "imgs", str(data[0]))):
             os.mkdir(os.path.join(".", "imgs", str(data[0])))
-        urllib.request.urlretrieve(data[9][i], os.path.join(".", "imgs", str(data[0]), str(data[0])+"_"+str(i)+".jpg"))
-    return len(data[9])
+        response = requests.get(data[9][i])
+        img = Image.open(io.BytesIO(response.content)).convert('RGB')
+        img.save(os.path.join(".", "imgs", str(data[0]), str(data[0])+"_"+str(i)+".jpeg"))
+    return len(data[9])    

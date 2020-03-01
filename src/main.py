@@ -96,9 +96,9 @@ if __name__ == "__main__":
 
             total_imgs = 0
             if download:
-                imgs_pool = Pool(32)
+                imgs_pool = ThreadPool(32)
                 print("\nRealizando download das imagens...")
-                for value in imgs_pool.map(download_imgs, tqdm(data, desc="Anúncios")):
+                for value in imgs_pool.imap_unordered(download_imgs, tqdm(data, desc="Anúncios")):
                     total_imgs += value
                 print("Download concluído!")
                 imgs_pool.close()

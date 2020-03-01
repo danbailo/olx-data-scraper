@@ -1,5 +1,4 @@
 from termcolor import colored
-import os
 
 print("\n# Pressione ctrl+c para finalizar o programa!")
 
@@ -31,8 +30,7 @@ except KeyboardInterrupt:
     print("\n\nPrograma finalizado!")
     exit()
 
-
-with open(os.path.join("..","config.txt"), "w") as file:
+with open("config.txt", "w") as file:
     file.write("Intervalo de busca em dias: {days} #quantidade em dias\n".format(days=days))
     if download[0].lower() == "s":
         file.write("Download de imagens: on #on/off")

@@ -19,14 +19,12 @@ if __name__ == "__main__":
     database = Database()
     olx = Olx()
 
-    print(database.get_config())
-
-    if not os.path.isdir(os.path.join("..","imgs")):
-        os.mkdir(os.path.join("..","imgs"))
+    if not os.path.isdir(os.path.join("imgs")):
+        os.mkdir(os.path.join("imgs"))
 
     try:
         while True:
-            input_file = os.path.join("..", "input.txt")
+            input_file = os.path.join(".","input.txt")
 
             config = get_config()
             days = config[0]
@@ -75,7 +73,7 @@ if __name__ == "__main__":
 
             data_pool = Pool(32)
             print("\nExtraindo os dados dos anúncios...")
-            data = data_pool.map(olx.get_json, tqdm(links.values()))
+            data = data_pool.map(olx.get_json, tqdm(links.values(), desc="Anúncios"))
             data_pool.close()
             data_pool.join()
             del data_pool
@@ -100,7 +98,7 @@ if __name__ == "__main__":
             if download:
                 imgs_pool = Pool(32)
                 print("\nRealizando download das imagens...")
-                for value in imgs_pool.map(download_imgs, tqdm(data)):
+                for value in imgs_pool.map(download_imgs, tqdm(data, desc="Anúncios")):
                     total_imgs += value
                 print("Download concluído!")
                 imgs_pool.close()
@@ -113,5 +111,5 @@ if __name__ == "__main__":
             count_exec += 1
             first_exec = False
     except KeyboardInterrupt:
-        print("\n\nPrograma finalizado!\n")    
+        print("\n\nPrograma finalizado!")    
     

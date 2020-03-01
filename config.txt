@@ -1,2 +1,2 @@
 Intervalo de busca em dias: 1 #quantidade em dias
-Download de imagens: off #on/off
+Download de imagens: on #on/off

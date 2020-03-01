@@ -44,7 +44,7 @@ class Database:
             )        
 
     def insert_data(self, cursor, data):
-        for i in trange(len(data)):
+        for i in trange(len(data), desc="Anúncios"):
             try:
                 id_anuncio = data[i][0]
                 municipio = data[i][1]

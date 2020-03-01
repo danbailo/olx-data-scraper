@@ -1,5 +1,4 @@
 from termcolor import colored
-import os
 
 print("\n# Pressione ctrl+c para finalizar o programa!")
 
@@ -7,7 +6,6 @@ print("\n{msg}".format(msg=colored("Módulo de configuração do banco de dados.
 
 try:
     while True:
-
             db = input("\nDigite o nome do banco de dados> ")
             user = input("\nDigite o nome do usuário banco de dados> ")
             password = input("\nDigite a senha deste usuário do banco de dados> ")
@@ -27,7 +25,7 @@ except KeyboardInterrupt:
     exit()
 
 
-with open(os.path.join("db_config.txt"), "w") as file:
+with open("db_config.txt", "w") as file:
     file.write("Banco de dados: {db}\n".format(db=db))
     file.write("Usuário: {user}\n".format(user=user))
     file.write("Senha: {password}\n".format(password=password))

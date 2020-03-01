@@ -17,7 +17,7 @@ if __name__ == "__main__":
     count_exec = 1
 
     database = Database()
-    olx = Olx()
+    olx = Olx()  
 
     if not os.path.isdir(os.path.join("imgs")):
         os.mkdir(os.path.join("imgs"))
@@ -34,7 +34,7 @@ if __name__ == "__main__":
             db = db_config[0]
             user = db_config[1]
             password = db_config[2]
-            host =db_config[3]
+            host = db_config[3]
 
             print("\n# Pressione ctrl+c para finalizar o programa!\n")
             print("Execução nº {n_exec}".format(n_exec=colored(str(count_exec), "yellow")))
@@ -80,7 +80,6 @@ if __name__ == "__main__":
             print("Dados extraidos!")
 
             connect = database.connect(db, user, password, host)
-            connect.autocommit = True
             cursor = connect.cursor()
 
             if first_exec:

@@ -8,7 +8,7 @@ try:
     while True:
             days = " "
             while not days.isdigit():                
-                days = input("\nApós quantos dias deseja realziar a nova consulta?> ")
+                days = input("\nApós quantos dias deseja realizar a nova consulta?> ")
                 if not days.isdigit():
                     print('Por favor, entre apenas com valores numéricos!')
 

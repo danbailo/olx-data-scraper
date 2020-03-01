@@ -7,7 +7,7 @@ help:
 	@echo "       Prepara ambiente de desenvolvimento, use apenas uma vez.\n"
 	@echo "make config"
 	@echo "       Executa o módulo de configuração do programa principal.\n"	
-	@echo "make config-db"
+	@echo "make db-config"
 	@echo "       Executa o módulo de configuração do banco de dados.\n"		
 	@echo "make run"
 	@echo "       Executa o programa principal\n"
@@ -20,8 +20,11 @@ prepare-dev:
 config:
 	${PYTHON} src/config.py
 
-config-db:
-	${PYTHON} src/db_config.py	
+db-config:
+	${PYTHON} src/db_config.py
+
+db-conn-test:
+	${PYTHON} src/db_test.py	
 
 run: src
 	${PYTHON} src/main.py

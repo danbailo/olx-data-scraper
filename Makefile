@@ -13,7 +13,7 @@ help:
 	@echo "       Executa o programa principal\n"
 
 prepare-dev:
-	sudo apt install python3 python3-pip -y
+	sudo apt install python3 python3-pip postgresql postgresql-contrib -y 
 	${PYTHON} -m pip install -U pip --user
 	${PYTHON} -m pip install -r requirements.txt --user
 

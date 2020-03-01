@@ -33,8 +33,8 @@ except KeyboardInterrupt:
 with open("config.txt", "w") as file:
     file.write("Intervalo de busca em dias: {days} #quantidade em dias\n".format(days=days))
     if download[0].lower() == "s":
-        file.write("Download de imagens: on #on/off")
+        file.write("Download de imagens: on #on/off\n")
     else:
-        file.write("Download de imagens: off #on/off")
+        file.write("Download de imagens: off #on/off\n")
 
 print("\nArquivo de configuração gravado com {success}!\n".format(success=colored("SUCESSO", "green")))

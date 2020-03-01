@@ -29,6 +29,6 @@ with open("db_config.txt", "w") as file:
     file.write("Banco de dados: {db}\n".format(db=db))
     file.write("Usuário: {user}\n".format(user=user))
     file.write("Senha: {password}\n".format(password=password))
-    file.write("Host: {host}".format(host=host))
+    file.write("Host: {host}\n".format(host=host))
 
 print("\nArquivo de configuração gravado com {success}!\n".format(success=colored("SUCESSO", "green")))

@@ -2,7 +2,7 @@ import urllib.request
 import os
 import re
 
-def get_config(config = os.path.join("..", "config.txt")):
+def get_config(config = os.path.join(".", "config.txt")):
     pattern_options = re.compile(r"(.*\:\s|.*\:)(.*?)((\s\#.*)|(\#.*))")
     with open(config, "r") as file:
         options = []

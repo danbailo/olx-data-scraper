@@ -87,6 +87,7 @@ if __name__ == "__main__":
 
             print("\nInserindo dados no banco...")
             database.insert_data(cursor, data)
+            connect.commit()
             print("Dados inseridos!")
 
             database.close(connect, cursor)

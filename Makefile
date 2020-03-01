@@ -1,4 +1,4 @@
-.PHONY: help prepare-dev test lint run doc
+.PHONY: help prepare-dev config db-config run
 PYTHON=/usr/bin/python3
 
 .DEFAULT: help
@@ -22,9 +22,6 @@ config:
 
 db-config:
 	${PYTHON} src/db_config.py
-
-db-conn-test:
-	${PYTHON} src/db_test.py	
 
 run: src
 	${PYTHON} src/main.py

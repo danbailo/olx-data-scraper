@@ -26,7 +26,7 @@ class Olx:
 
     def get_urn(self, input_file): #pega as extensoes do txt
         file = open(input_file, "r")
-        all_urn = [urn.replace("\n", "") for urn in file.readlines()]
+        all_urn = [urn.replace("\n", "") for urn in file.readlines() if urn != '\n']
         file.close()
         return all_urn
 

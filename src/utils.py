@@ -5,6 +5,7 @@ import warnings
 import io
 import os
 import re
+from tqdm import tqdm
 
 warnings.filterwarnings("ignore")
 
@@ -21,13 +22,28 @@ def get_config(config = os.path.join(".", "config.txt")):
     return options
 
 def download_imgs(data):
-    for i in range(len(data[9])):
-        if not os.path.isdir(os.path.join(".", "imgs", str(data[0]))):
-            os.mkdir(os.path.join(".", "imgs", str(data[0])))
-        response = requests.get(data[9][i])
-        try:
-            img = Image.open(io.BytesIO(response.content)).convert('RGB')
-            img.save(os.path.join(".", "imgs", str(data[0]), str(data[0])+"_"+str(i)), "JPEG")
-        except Exception:
-            print("img error")
-    return len(data[9])    
+    for imgs in tqdm(data):
+        for i in range(len(imgs[9])):
+            if not os.path.isdir(os.path.join(".", "imgs", str(imgs[0]))):
+                os.mkdir(os.path.join(".", "imgs", str(imgs[0])))            
+            if imgs[9][i][-4:] == ".jpg":
+                response = requests.get(imgs[9][i])
+                try:
+                    img = Image.open(io.BytesIO(response.content))
+                    #img = Image.open(io.BytesIO(response.content)).convert('RGB')#
+                    img.save(os.path.join(".", "imgs", str(imgs[0]), str(imgs[0])+"_"+str(i))+".jpeg", "JPEG")
+                except Exception:
+                    print("img error")
+    return len(data[9])              
+
+# def download_imgs(data):
+#     for i in range(len(data[9])):
+#         if not os.path.isdir(os.path.join(".", "imgs", str(data[0]))):
+#             os.mkdir(os.path.join(".", "imgs", str(data[0])))
+#         response = requests.get(data[9][i])
+#         try:
+#             img = Image.open(io.BytesIO(response.content)).convert('RGB')
+#             img.save(os.path.join(".", "imgs", str(data[0]), str(data[0])+"_"+str(i)), "JPEG")
+#         except Exception:
+#             print("img error")
+#     return len(data[9])    

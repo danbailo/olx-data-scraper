@@ -96,12 +96,9 @@ if __name__ == "__main__":
 
             total_imgs = 0
             if download:
-                imgs_pool = ThreadPool(32)
                 print("\nRealizando download das imagens...")
-                for value in imgs_pool.imap_unordered(download_imgs, tqdm(data, desc="Anúncios")):
-                    total_imgs += value
+                download_imgs(data)
                 print("Download concluído!")
-                del imgs_pool                
                 print("\nNo total, foi realizado o download de {total_imgs} imagens!".format(total_imgs=total_imgs))
 
             print(colored("SUCESSO!", "green"))

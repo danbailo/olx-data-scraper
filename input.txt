@@ -1,4 +1,1 @@
 /terrenos/fazendas?q=soja
-/terrenos/fazendas?q=arrendamento
-/terrenos/sitios-e-chacaras?q=
-/terrenos/sitios-e-chacaras?q=arrendamento

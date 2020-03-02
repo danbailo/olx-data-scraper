@@ -9,7 +9,7 @@ from tqdm import tqdm
 
 warnings.filterwarnings("ignore")
 
-def get_config(config = os.path.join(".", "config.txt")):
+def get_config(config = os.path.join("config", "config.txt")):
     pattern_options = re.compile(r"(.*\:\s|.*\:)(.*?)((\s\#.*)|(\#.*))")
     with open(config, "r") as file:
         options = []
@@ -22,7 +22,7 @@ def get_config(config = os.path.join(".", "config.txt")):
     return options
 
 def download_imgs(data):
-    for imgs in tqdm(data):
+    for imgs in tqdm(data, desc="Anúncios"):
         for i in range(len(imgs[9])):
             if not os.path.isdir(os.path.join(".", "imgs", str(imgs[0]))):
                 os.mkdir(os.path.join(".", "imgs", str(imgs[0])))            

@@ -1,4 +1,5 @@
 from termcolor import colored
+import os
 
 print("\n# Pressione ctrl+c para finalizar o programa!")
 
@@ -25,7 +26,7 @@ except KeyboardInterrupt:
     exit()
 
 
-with open("db_config.txt", "w") as file:
+with open(os.path.join("config", "db_config.txt"), "w") as file:
     file.write("Banco de dados: {db}\n".format(db=db))
     file.write("Usuário: {user}\n".format(user=user))
     file.write("Senha: {password}\n".format(password=password))

@@ -1,3 +1,4 @@
+import PIL
 from PIL import Image
 import requests
 import warnings
@@ -24,6 +25,9 @@ def download_imgs(data):
         if not os.path.isdir(os.path.join(".", "imgs", str(data[0]))):
             os.mkdir(os.path.join(".", "imgs", str(data[0])))
         response = requests.get(data[9][i])
-        img = Image.open(io.BytesIO(response.content)).convert('RGB')
-        img.save(os.path.join(".", "imgs", str(data[0]), str(data[0])+"_"+str(i)+".jpeg"))
+        try:
+            img = Image.open(io.BytesIO(response.content)).convert('RGB')
+            img.save(os.path.join(".", "imgs", str(data[0]), str(data[0])+"_"+str(i)+".jpeg"))
+        except Exception:
+            print("img error")
     return len(data[9])    

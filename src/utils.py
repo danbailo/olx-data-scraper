@@ -27,7 +27,7 @@ def download_imgs(data):
         response = requests.get(data[9][i])
         try:
             img = Image.open(io.BytesIO(response.content)).convert('RGB')
-            img.save(os.path.join(".", "imgs", str(data[0]), str(data[0])+"_"+str(i)+".jpeg"))
+            img.save(os.path.join(".", "imgs", str(data[0]), str(data[0])+"_"+str(i)), "JPEG")
         except Exception:
             print("img error")
     return len(data[9])    

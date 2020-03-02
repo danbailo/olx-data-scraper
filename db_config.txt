@@ -1,4 +1,4 @@
-Banco de dados: mydb
+Banco de dados: olx_database
 Usuário: postgres
 Senha: 59228922ddd
 Host: localhost

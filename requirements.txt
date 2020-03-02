@@ -1,4 +1,6 @@
+psycopg2==2.8.4
+termcolor==1.1.0
 tqdm==4.40.2
 requests==2.21.0
-termcolor==1.1.0
 beautifulsoup4==4.8.0
+Pillow==7.0.0

@@ -101,8 +101,6 @@ if __name__ == "__main__":
                 for value in imgs_pool.imap_unordered(download_imgs, tqdm(data, desc="Anúncios")):
                     total_imgs += value
                 print("Download concluído!")
-                imgs_pool.close()
-                imgs_pool.join()
                 del imgs_pool                
                 print("\nNo total, foi realizado o download de {total_imgs} imagens!".format(total_imgs=total_imgs))
 

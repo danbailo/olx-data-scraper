@@ -5,6 +5,7 @@ import warnings
 import io
 import os
 import re
+import time
 from tqdm import tqdm
 
 warnings.filterwarnings("ignore")
@@ -22,19 +23,31 @@ def get_config(config = os.path.join("config", "config.txt")):
     return options
 
 def download_imgs(data):
+    len_total = 0
     for imgs in tqdm(data, desc="Anúncios"):
         for i in range(len(imgs[9])):
             if not os.path.isdir(os.path.join(".", "imgs", str(imgs[0]))):
                 os.mkdir(os.path.join(".", "imgs", str(imgs[0])))            
             if imgs[9][i][-4:] == ".jpg":
-                response = requests.get(imgs[9][i])
+                request_error = 0
+                while True:
+                    try:
+                        response = requests.get(imgs[9][i])
+                        break
+                    except Exception:
+                        request_error += 1
+                        time.sleep(10)
+                        if request_error > 5:
+                            print("Request error")
+                            exit()
                 try:
                     img = Image.open(io.BytesIO(response.content))
                     #img = Image.open(io.BytesIO(response.content)).convert('RGB')#
                     img.save(os.path.join(".", "imgs", str(imgs[0]), str(imgs[0])+"_"+str(i))+".jpeg", "JPEG")
                 except Exception:
                     print("img error")
-    return len(data[9])              
+        len_total += len(imgs[9])
+    return len_total             
 
 # def download_imgs(data):
 #     for i in range(len(data[9])):

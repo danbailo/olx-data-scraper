@@ -97,7 +97,7 @@ if __name__ == "__main__":
             total_imgs = 0
             if download:
                 print("\nRealizando download das imagens...")
-                download_imgs(data)
+                total_imgs = download_imgs(data)
                 print("Download concluído!")
                 print("\nNo total, foi realizado o download de {total_imgs} imagens!".format(total_imgs=total_imgs))
 

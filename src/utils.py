@@ -27,6 +27,7 @@ def download_imgs(data):
 		while True:
 			try:
 				response = requests.get(data[9][i])
+				format_img = "." + data[9][i].split(".")[-1]
 				break
 			except Exception:
 				request_error += 1
@@ -35,12 +36,10 @@ def download_imgs(data):
 					print("Request error")
 					exit()
 		try:
-			path = os.path.join(".", "imgs", str(data[0]), str(data[0])+"_"+str(i))+".jpg"
+			path = os.path.join(".", "imgs", str(data[0]), str(data[0])+"_"+str(i)) + format_img
 			with open(path, "wb") as file:
 				file.write(response.content)
 			len_total += 1
-		except Exception as err:
-			print(err)
-			print(err.__class__)
-			print()
+		except Exception:
+			pass
 	return len_total

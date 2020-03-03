@@ -20,11 +20,9 @@ try:
 				if option == "":
 					option = "n"
 			if option[0].lower() == "n" or option=="": break
-			
 except KeyboardInterrupt:
 	print("\n\nPrograma finalizado!")
 	exit()
-
 
 with open(os.path.join("config", "db_config.txt"), "w") as file:
 	file.write("Banco de dados: {db}\n".format(db=db))

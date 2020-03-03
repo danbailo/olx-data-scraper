@@ -24,13 +24,13 @@ class Olx:
 		self.__base_url = "https://www.olx.com.br"
 		self.pages_pattern = re.compile(r"(.*\?o=)(\d+)(.*)")
 
-	def get_urn(self, input_file): #pega as extensoes do txt
+	def get_urn(self, input_file):
 		file = open(input_file, "r")
 		all_urn = [urn.replace("\n", "") for urn in file.readlines() if urn != '\n']
 		file.close()
 		return all_urn
 
-	def get_pages(self, all_urn): #a partir das extensoes do txt, pega da page 1 ate a ultima
+	def get_pages(self, all_urn):
 		all_pages = []
 		for urn in all_urn:
 			uri = self.__base_url + urn
@@ -45,7 +45,7 @@ class Olx:
 			all_pages.extend(pages)
 		return all_pages
 
-	def get_links(self, pages): #coleta os links de cada anuncio de todas as paginas
+	def get_links(self, pages):
 		links = {}
 		request_error = 0
 		while True:

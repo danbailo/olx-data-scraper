@@ -20,17 +20,26 @@ headers = {
 }
 
 class Olx:
+	"""
+		Classe responsável por fazer a análise e coleta dos dados da Olx.
+	"""	
 	def __init__(self):
 		self.__base_url = "https://www.olx.com.br"
 		self.pages_pattern = re.compile(r"(.*\?o=)(\d+)(.*)")
 
 	def get_urn(self, input_file):
+		"""
+			Pega as extensões dos links que serão extraídos dados posteriormente, contido no arquivo input.txt.
+		"""
 		file = open(input_file, "r")
 		all_urn = [urn.replace("\n", "") for urn in file.readlines() if urn != '\n']
 		file.close()
 		return all_urn
 
 	def get_pages(self, all_urn):
+		"""
+			Pega todas as páginas(1,2,3,...,50) que contém os anúncios a serem coletados.
+		"""		
 		all_pages = []
 		for urn in all_urn:
 			uri = self.__base_url + urn
@@ -46,6 +55,9 @@ class Olx:
 		return all_pages
 
 	def get_links(self, pages):
+		"""
+			Pega o link que cada anúncio nas páginas que foram coletadas, onde cada página possui no máximo 50 anúncios.
+		"""				
 		links = {}
 		request_error = 0
 		while True:
@@ -67,6 +79,9 @@ class Olx:
 		return links
 
 	def get_json(self, links):
+		"""
+			Pega o JSON que contém os dados do anúncio, contido na página do anúncio e retorna os dados coletados.
+		"""				
 		request_error = 0
 		while True:
 			try:

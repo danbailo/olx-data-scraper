@@ -1,27 +1,33 @@
 # OLX Scraper
 
 ## Descrição
-Este projeto consiste em coletar os dados dos anúncios nos quais os links para esses anúncios se encontram no arquivo [input.txt](input.txt). Os dados são armazenados num banco de dados PostgreSQL. O usuário também tem a opção de baixar as imagens referentes aos anúncios e essas imagens são armazenadas no diretório `~/imgs/` que será criado automaticamente após a execução do programa.
+Este projeto consiste em coletar os dados dos anúncios nos quais os caminhos para esses anúncios se encontram no arquivo [input.txt](input.txt). 
+
+Os dados coletados são armazenados num banco de dados PostgreSQL.
+
+ O usuário também tem a opção de realizar o download das imagens referentes aos anúncios, essas imagens serão armazenadas no diretório `~/imgs/`, que será criado automaticamente após a execução do programa.
 
 As imagens serão separadas por pasta, onde o nome de cada pasta consiste no ID do anúncio. Ao final da execução, será mostrado a quantidade total de imagens que foram baixadas.
 
 ---
+
+Todos os comandos devem ser executados num terminal na pasta raiz do programa.
+
+
 ## Dependências
 
-Para instalar as dependências, execute o comando abaixo num terminal na raiz do projeto:
-
-* `make prepare-dev`
+* `make prepare-dev` - Executa o comando para instalar as dependências do programa.
 
 ---
 ## Como usar
 
 Para executar o programa, abra um terminal na raiz do projeto e execute:
 
-* `make run`
+* `make` ou `make help` - Exibe as informações sobre cada comando.
 
-### Informacoes
+* `make config` - Executa o módulo para configurar a frequência de execução do programa principal e habilita/desabilita o download das imagens;
 
-* `make [help]` - Exibe as informacoes sobre cada comando.
-* `make config` - Modulo para configurar a frequencia de execucao do programa principal e habilitar/desabilitar o download das imagens;
-* `make db-config` - Modulo para configurar a conexao ao banco de dados.
+* `make db-config` - Executa o módulo para configurar a conexão com o banco de dados.
+
+* `make run` - Executa o programa principal.
 ---

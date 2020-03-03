@@ -1,6 +1,10 @@
 from termcolor import colored
 import os
 
+"""
+	Configura a execução do programa principal, relacionado com o período de execução e download de imagens.
+"""
+
 print("\n# Pressione ctrl+c para finalizar o programa!")
 
 print("\n{msg}".format(msg=colored("Módulo de configuração.", "blue")))

@@ -1,12 +1,12 @@
 import requests
-import warnings
 import time
 import os
 import re
 
-warnings.filterwarnings("ignore")
-
 def get_config(config = os.path.join("config", "config.txt")):
+	"""
+		Pega a configuração para executar o programa principal, contida no arquivo config.txt.
+	"""	
 	pattern_options = re.compile(r"(.*\:\s|.*\:)(.*?)((\s\#.*)|(\#.*))")
 	with open(config, "r") as file:
 		options = []
@@ -19,6 +19,9 @@ def get_config(config = os.path.join("config", "config.txt")):
 	return options
 
 def download_imgs(data):
+	"""
+		Realiza o download das imagens, salvando em pastas separadas, onde o nome de cada pasta e o ID do anúncio.
+	"""		
 	len_total = 0
 	for i in range(len(data[9])):
 		if not os.path.isdir(os.path.join(".", "imgs", str(data[0]))):

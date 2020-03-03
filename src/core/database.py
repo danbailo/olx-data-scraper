@@ -4,8 +4,13 @@ import re
 import os
 
 class Database:
-
+	"""
+		Classe responsável por manipular o banco de dados.
+	"""	
 	def get_config(self, config = os.path.join("config", "db_config.txt")):
+		"""
+			Pega a configuração do banco de dados contido no arquivo db_config.txt.
+		"""			
 		pattern_config = re.compile(r"(.*\:\s)(.*)")
 		with open(config, "r") as file:
 			options = []
@@ -15,6 +20,9 @@ class Database:
 		return options        
 
 	def connect(self, database, user, password, host):
+		"""
+			Conecta no banco de dados.
+		"""			
 		return psycopg2.connect(
 			dbname=database,
 			user=user,
@@ -22,6 +30,9 @@ class Database:
 			host=host)
 		
 	def create_table(self, cursor):
+		"""
+			Cria a tabela no banco de dados.
+		"""			
 		cursor.execute("""
 				CREATE TABLE IF NOT EXISTS dados_olx (
 					id_anuncio BIGINT,
@@ -44,6 +55,9 @@ class Database:
 			)        
 
 	def insert_data(self, cursor, data):
+		"""
+			Insere os dados coletados no base de dados.
+		"""			
 		for i in trange(len(data), desc="Anúncios"):
 			try:
 				id_anuncio = data[i][0]
@@ -76,5 +90,8 @@ class Database:
 			)
 
 	def close(self, cursor, connection):
+		"""
+			Fecha a conexão com o banco de dados.
+		"""				
 		cursor.close()
 		connection.close()

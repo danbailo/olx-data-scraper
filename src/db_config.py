@@ -1,6 +1,10 @@
 from termcolor import colored
 import os
 
+"""
+	Configura a conexão do banco de dados, relacionado com o nome do banco, usuário, senha e host.
+"""
+
 print("\n# Pressione ctrl+c para finalizar o programa!")
 
 print("\n{msg}".format(msg=colored("Módulo de configuração do banco de dados.", "blue")))

@@ -73,7 +73,7 @@ class Olx:
                 response = requests.get(links, headers=headers)
                 break
             except Exception:
-                time.sleep(1)
+                time.sleep(5)
                 request_error += 1
                 if request_error >= 30:
                     return False

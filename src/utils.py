@@ -24,29 +24,33 @@ def get_config(config = os.path.join("config", "config.txt")):
 
 def download_imgs(data):
     len_total = 0
+
     for imgs in tqdm(data, desc="Anúncios"):
         for i in range(len(imgs[9])):
-            if not os.path.isdir(os.path.join(".", "imgs", str(imgs[0]))):
-                os.mkdir(os.path.join(".", "imgs", str(imgs[0])))            
-            if imgs[9][i][-4:] == ".jpg":
-                request_error = 0
-                while True:
-                    try:
-                        response = requests.get(imgs[9][i])
-                        break
-                    except Exception:
-                        request_error += 1
-                        time.sleep(10)
-                        if request_error > 5:
-                            print("Request error")
-                            exit()
+            if not os.path.isdir(os.path.join("imgs", str(imgs[0]))):
+                os.mkdir(os.path.join("imgs", str(imgs[0])))            
+            request_error = 0
+            while True:
                 try:
-                    img = Image.open(io.BytesIO(response.content))
-                    #img = Image.open(io.BytesIO(response.content)).convert('RGB')#
-                    img.save(os.path.join(".", "imgs", str(imgs[0]), str(imgs[0])+"_"+str(i))+".jpeg", "JPEG")
+                    response = requests.get(imgs[9][i])
+                    break
                 except Exception:
-                    print("img error")
-        len_total += len(imgs[9])
+                    request_error += 1
+                    time.sleep(10)
+                    if request_error > 5:
+                        print("Request error")
+                        exit()
+            try:
+                #img = Image.open(io.BytesIO(response.content)).convert('RGB')
+                #img.save(os.path.join(".", "imgs", str(imgs[0]), str(imgs[0])+"_"+str(i))+".jpeg", "JPEG")
+                path = os.path.join(".", "imgs", str(imgs[0]), str(imgs[0])+"_"+str(i))+".jpg"
+                with open(path, "wb") as file:
+                    file.write(response.content)
+                len_total += 1
+            except Exception as err:
+                print(err)
+                print(err.__class__)
+                print()
     return len_total             
 
 # def download_imgs(data):

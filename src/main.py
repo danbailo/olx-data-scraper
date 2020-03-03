@@ -19,9 +19,6 @@ if __name__ == "__main__":
     database = Database()
     olx = Olx()  
 
-    if not os.path.isdir(os.path.join("imgs")):
-        os.mkdir(os.path.join("imgs"))
-
     try:
         while True:
             input_file = os.path.join(".","input.txt")
@@ -71,8 +68,8 @@ if __name__ == "__main__":
             del links_pool   
             print("{len_links} Links coletados!".format(len_links=len(links)))
 
-            data_pool = Pool(32)
             print("\nExtraindo os dados dos anúncios...")
+            data_pool = Pool(10)
             data = data_pool.map(olx.get_json, tqdm(links.values(), desc="Anúncios"))
             data_pool.close()
             data_pool.join()
@@ -94,8 +91,9 @@ if __name__ == "__main__":
 
             print("\nForam inseridos {unique_data} tuplas na base dados!".format(unique_data=len(data)))
 
-            total_imgs = 0
             if download:
+                if not os.path.isdir(os.path.join("imgs")):
+                    os.mkdir(os.path.join("imgs"))                
                 print("\nRealizando download das imagens...")
                 total_imgs = download_imgs(data)
                 print("Download concluído!")

@@ -106,8 +106,6 @@ if __name__ == "__main__":
 				print("Download concluído!")
 				print("\nNo total, foi realizado o download de {total_imgs} imagens!".format(total_imgs=total_imgs))
 
-			print(colored("SUCESSO!", "green"))
-
 			write_log({
 				"number_exec": count_exec,
 				"curr_exec": datetime.now(),
@@ -117,6 +115,8 @@ if __name__ == "__main__":
 				"len_data": len(data),
 				"total_imgs": total_imgs}
 				)			
+
+			print("Arquivo de log gerado com {success}".format(success=colored("SUCESSO!", "green")))
 
 			count_exec += 1
 			first_exec = False

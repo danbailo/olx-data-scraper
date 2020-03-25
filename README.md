@@ -29,5 +29,9 @@ Para executar o programa, abra um terminal na raiz do projeto e execute:
 
 * `make db-config` - Executa o módulo para configurar a conexão com o banco de dados.
 
+* `make input-config` - Executa o módulo para configurar o arquivo de entrada no programa principal.
+
+	* Exemplo de link aceito: `/terrenos/fazendas?q=soja`
+
 * `make run` - Executa o programa principal.
 ---

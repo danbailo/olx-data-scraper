@@ -46,3 +46,14 @@ def download_imgs(data):
 		except Exception:
 			pass
 	return len_total
+
+def write_log(info):
+	file = open("log.txt", "w")
+	file.write("Execução nº {n_exec}\n\n".format(n_exec = info["number_exec"]))
+	file.write("Data da última execução {curr_exec}\n\n".format(curr_exec = info["curr_exec"].strftime("%d/%m/%Y")))
+	file.write("Próxima execução {next_exec}\n\n".format(next_exec = info["next_exec"].strftime("%d/%m/%Y")))
+	file.write("{len_pages} Páginas coletadas!\n".format(len_pages = info["len_pages"]))
+	file.write("{len_links} Links coletados!\n".format(len_links = info["len_links"]))
+	file.write("Foram inseridos {unique_data} tuplas na base dados!".format(unique_data = info["len_data"]))
+	file.write("No total, foi realizado o download de {total_imgs} imagens!".format(total_imgs = info["total_imgs"]))
+	file.close()

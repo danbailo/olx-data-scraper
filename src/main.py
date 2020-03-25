@@ -1,10 +1,10 @@
-from core import Olx, Database
-from tqdm import tqdm
+from utils import get_config, download_imgs, write_log
 from multiprocessing import Pool
-from utils import get_config, download_imgs
-from datetime import datetime
+from core import Olx, Database
 from datetime import timedelta
+from datetime import datetime
 from termcolor import colored
+from tqdm import tqdm
 import time
 import os
 
@@ -17,7 +17,7 @@ if __name__ == "__main__":
 	olx = Olx()  
 
 	try:
-		while True:
+		while True:			
 			input_file = os.path.join(".","input.txt")
 
 			config = get_config()
@@ -41,11 +41,11 @@ if __name__ == "__main__":
 
 			print("Download de imagens: {download}".format(download=colored(download_opt, download_color)))
 
-			if not first_exec:                
+			if not first_exec:
 				next_exec = datetime.now() + timedelta(days=int(days))
 
 				print("\nPróxima execução {next_exec}.".format(next_exec=colored(next_exec.strftime("%d/%m/%Y"), "blue")))
-				while datetime.now() < next_exec:
+				while datetime.now() < next_exec:					
 					pass
 
 			all_urn = olx.get_urn(input_file)
@@ -66,6 +66,7 @@ if __name__ == "__main__":
 			print("{len_links} Links coletados!".format(len_links=len(links)))
 
 			data_pool = Pool(32)
+			#data_pool = Pool(10)
 			print("\nExtraindo os dados dos anúncios...")
 			data = data_pool.map(olx.get_json, tqdm(links.values(), desc="Anúncios"))
 			data_pool.close()
@@ -94,6 +95,7 @@ if __name__ == "__main__":
 				if not os.path.isdir(os.path.join("imgs")):
 					os.mkdir(os.path.join("imgs"))                
 				imgs_pool = Pool(32)
+				#imgs_pool = Pool(10)
 				print("\nRealizando download das imagens...")
 				for value in imgs_pool.map(download_imgs, tqdm(data, desc="Anúncios")):
 					total_imgs += value
@@ -105,6 +107,16 @@ if __name__ == "__main__":
 				print("\nNo total, foi realizado o download de {total_imgs} imagens!".format(total_imgs=total_imgs))
 
 			print(colored("SUCESSO!", "green"))
+
+			write_log({
+				"number_exec": count_exec,
+				"curr_exec": datetime.now(),
+				"next_exec": datetime.now() + timedelta(days=int(days)),
+				"len_pages": len(pages),
+				"len_links": len(links),
+				"len_data": len(data),
+				"total_imgs": total_imgs}
+				)			
 
 			count_exec += 1
 			first_exec = False

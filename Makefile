@@ -9,6 +9,8 @@ help:
 	@echo "       Executa o módulo de configuração do programa principal.\n"	
 	@echo "make db-config"
 	@echo "       Executa o módulo de configuração do banco de dados.\n"		
+	@echo "make input-config"
+	@echo "       Executa o módulo de configuração do arquivo de entrada no programa principal.\n"		
 	@echo "make run"
 	@echo "       Executa o programa principal\n"
 
@@ -24,6 +26,9 @@ config:
 
 db-config:
 	${PYTHON} src/db_config.py
+
+input-config:
+	${PYTHON} src/input_config.py	
 
 run: src
 	${PYTHON} src/main.py

@@ -11,19 +11,19 @@ print("\n{msg}".format(msg=colored("Módulo de configuração do banco de dados.
 
 try:
 	while True:
-			db = input("\nDigite o nome do banco de dados> ")
-			user = input("\nDigite o nome do usuário banco de dados> ")
-			password = input("\nDigite a senha deste usuário do banco de dados> ")
-			host = input("\nDigite o nome do banco de dados (padrão: localhost)> ")
-			if host == "":
-				host = "localhost"
+		db = input("\nDigite o nome do banco de dados> ")
+		user = input("\nDigite o nome do usuário banco de dados> ")
+		password = input("\nDigite a senha deste usuário do banco de dados> ")
+		host = input("\nDigite o nome do banco de dados (padrão: localhost)> ")
+		if host == "":
+			host = "localhost"
 
-			option = " "
-			while option[0].lower() not in ["s", "n"]:
-				option = input("\nDeseja alterar alguma informação inserida, [s]im ou [n]ão/Enter?>")
-				if option == "":
-					option = "n"
-			if option[0].lower() == "n" or option=="": break
+		option = " "
+		while option[0].lower() not in ["s", "n"]:
+			option = input("\nDeseja alterar alguma informação inserida, [s]im ou [n]ão/Enter?>")
+			if option == "":
+				option = "n"
+		if option[0].lower() == "n" or option=="": break
 except KeyboardInterrupt:
 	print("\n\nPrograma finalizado!")
 	exit()

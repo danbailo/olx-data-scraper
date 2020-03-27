@@ -65,8 +65,7 @@ if __name__ == "__main__":
 			del links_pool   
 			print("{len_links} Links coletados!".format(len_links=len(links)))
 
-			data_pool = Pool(32)
-			#data_pool = Pool(10)
+			data_pool = Pool(8)
 			print("\nExtraindo os dados dos anúncios...")
 			data = data_pool.map(olx.get_json, tqdm(links.values(), desc="Anúncios"))
 			data_pool.close()
@@ -94,8 +93,7 @@ if __name__ == "__main__":
 			if download:
 				if not os.path.isdir(os.path.join("imgs")):
 					os.mkdir(os.path.join("imgs"))                
-				imgs_pool = Pool(32)
-				#imgs_pool = Pool(10)
+				imgs_pool = Pool(8)
 				print("\nRealizando download das imagens...")
 				for value in imgs_pool.map(download_imgs, tqdm(data, desc="Anúncios")):
 					total_imgs += value

@@ -55,5 +55,5 @@ def write_log(info):
 	file.write("{len_pages} Páginas coletadas!\n".format(len_pages = info["len_pages"]))
 	file.write("{len_links} Links coletados!\n".format(len_links = info["len_links"]))
 	file.write("Foram inseridos {unique_data} tuplas na base dados!\n".format(unique_data = info["len_data"]))
-	file.write("No total, foi realizado o download de {total_imgs} imagens!".format(total_imgs = info["total_imgs"]))
+	file.write("No total, foi realizado o download de {total_imgs} imagens!\n".format(total_imgs = info["total_imgs"]))
 	file.close()

@@ -91,6 +91,7 @@ class Olx:
 				time.sleep(1)
 				request_error += 1
 				if request_error >= 30:
+					print("request error exceded")
 					return False
 		soup = BeautifulSoup(response.text, "html.parser")
 		try:

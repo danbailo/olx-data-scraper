@@ -65,13 +65,19 @@ if __name__ == "__main__":
 			del links_pool   
 			print("{len_links} Links coletados!".format(len_links=len(links)))
 
-			data_pool = Pool(8)
 			print("\nExtraindo os dados dos anúncios...")
-			data = data_pool.map(olx.get_json, tqdm(links.values(), desc="Anúncios"))
-			data_pool.close()
-			time.sleep(60)
-			data_pool.join()
-			del data_pool
+			while True:
+				try:
+					data_pool = Pool(8)
+					data = data_pool.map(olx.get_json, tqdm(links.values(), desc="Anúncios"))
+					data_pool.close()
+					time.sleep(60)
+					data_pool.join()
+					del data_pool
+					break
+				except Exception:
+					continue
+			
 			print("Dados extraidos!")
 
 			connect = database.connect(db, user, password, host)

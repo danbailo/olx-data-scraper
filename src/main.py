@@ -60,23 +60,18 @@ if __name__ == "__main__":
 			for link in links_pool.map(olx.get_links, pages):
 				links.update(link)
 			links_pool.close()
-			time.sleep(60)
+			time.sleep(120)
 			links_pool.join()        
 			del links_pool   
 			print("{len_links} Links coletados!".format(len_links=len(links)))
 
 			print("\nExtraindo os dados dos anúncios...")
-			while True:
-				try:
-					data_pool = Pool(8)
-					data = data_pool.map(olx.get_json, tqdm(links.values(), desc="Anúncios"))
-					data_pool.close()
-					time.sleep(60)
-					data_pool.join()
-					del data_pool
-					break
-				except Exception:
-					continue
+			data_pool = Pool(8)
+			data = data_pool.map(olx.get_json, tqdm(links.values(), desc="Anúncios"))
+			data_pool.close()
+			time.sleep(120)
+			data_pool.join()
+			del data_pool
 			
 			print("Dados extraidos!")
 
@@ -104,7 +99,7 @@ if __name__ == "__main__":
 				for value in imgs_pool.map(download_imgs, tqdm(data, desc="Anúncios")):
 					total_imgs += value
 				imgs_pool.close()
-				time.sleep(60)
+				time.sleep(120)
 				imgs_pool.join()                    
 				del imgs_pool             
 				print("Download concluído!")
@@ -124,6 +119,7 @@ if __name__ == "__main__":
 
 			count_exec += 1
 			first_exec = False
+
 	except KeyboardInterrupt:
 		print("\n\nPrograma finalizado!")    
 	

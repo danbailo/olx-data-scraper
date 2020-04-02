@@ -88,11 +88,11 @@ class Olx:
 				response = requests.get(links, headers=headers)
 				break
 			except Exception:
-				time.sleep(1)
+				time.sleep(300)
 				request_error += 1
 				if request_error >= 30:
 					print("request error exceded")
-					return False
+					return []
 		soup = BeautifulSoup(response.text, "html.parser")
 		try:
 			script_tag = soup.find("script", attrs={"data-json":re.compile(".*")}).get("data-json")

@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 from tqdm import tqdm
+from datetime import datetime
 import requests
 import json
 import time
@@ -48,8 +49,16 @@ class Olx:
 				print("Erro de requisição, verifique se os links estão corretos e tente novamente!")
 				exit()
 			soup = BeautifulSoup(response.text, "html.parser")
-			last_page_link = soup.find("a", attrs={"title": "Última página"}).get("href")
-			first, last_page, second = self.pages_pattern.match(last_page_link).groups()
+			last_page_link = soup.find("a", attrs={"title": "Última página"})
+			if last_page_link is None:
+				last_page_link = soup.find("a", attrs={"data-lurker-detail": "last_page"})
+		
+			if not last_page_link:
+				all_pages.extend([])
+				return all_pages
+
+			last_links = last_page_link.get("href")
+			first, last_page, second = self.pages_pattern.match(last_links).groups()
 			pages = [first + str(i) + second for i in range(1, int(last_page) + 1)]
 			all_pages.extend(pages)
 		return all_pages
@@ -68,6 +77,8 @@ class Olx:
 					exit()
 				soup = BeautifulSoup(response.text, "html.parser")
 				ul = soup.find("ul", attrs={"id": "main-ad-list"})
+				if ul is None:
+					ul = soup.find("ul", attrs={"class": "sc-1fcmfeb-1 iptkoI"})				
 				for link in ul.find_all("a"):
 					links[link.get("data-lurker_list_id")] = link.get("href")
 				break
@@ -92,7 +103,7 @@ class Olx:
 				request_error += 1
 				if request_error >= 30:
 					print("request error exceded")
-					return []
+					return (int(), str(), str(), str(), float(), str(), str(), str(), str(), list(), str(), str(), str(), datetime.now().astimezone().strftime("%Y-%m-%d %H:%M:%S %Z"), bool())
 		soup = BeautifulSoup(response.text, "html.parser")
 		try:
 			script_tag = soup.find("script", attrs={"data-json":re.compile(".*")}).get("data-json")

@@ -46,8 +46,8 @@ class Olx:
 			uri = self.__base_url + urn
 			response = requests.get(uri, headers=headers)
 			if not response.ok:
-				print("Erro de requisição, verifique se os links estão corretos e tente novamente!")
-				exit()
+				print("Erro de requisição ao pegar determinada página!")
+				return all_pages
 			soup = BeautifulSoup(response.text, "html.parser")
 			last_page_link = soup.find("a", attrs={"title": "Última página"})
 			if last_page_link is None:
@@ -73,8 +73,8 @@ class Olx:
 			try:
 				response = requests.get(pages, headers=headers)
 				if not response.ok:
-					print("Erro de requisição, verifique se os links estão corretos e tente novamente!")
-					exit()
+					print("Erro de requisição ao pegar determinado link!")
+					links = {}
 				soup = BeautifulSoup(response.text, "html.parser")
 				ul = soup.find("ul", attrs={"id": "main-ad-list"})
 				if ul is None:

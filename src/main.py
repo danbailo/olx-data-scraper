@@ -1,5 +1,4 @@
 from utils import get_config, download_imgs, write_log
-from multiprocessing import Pool
 from multiprocessing.pool import ThreadPool
 from core import Olx, Database
 from datetime import timedelta
@@ -60,18 +59,12 @@ if __name__ == "__main__":
 			links = {}
 			for link in links_pool.map(olx.get_links, pages):
 				links.update(link)
-			# links_pool.close()
-			# time.sleep(120)
-			# links_pool.join()        
 			del links_pool   
 			print("{len_links} Links coletados!".format(len_links=len(links)))
 
 			print("\nExtraindo os dados dos anúncios...")
 			data_pool = ThreadPool(8)
 			data = data_pool.map(olx.get_json, tqdm(links.values(), desc="Anúncios"))
-			# data_pool.close()
-			# time.sleep(120)
-			# data_pool.join()
 			del data_pool
 			
 			print("Dados extraidos!")
@@ -99,9 +92,6 @@ if __name__ == "__main__":
 				print("\nRealizando download das imagens...")
 				for value in imgs_pool.map(download_imgs, tqdm(data, desc="Anúncios")):
 					total_imgs += value
-				# imgs_pool.close()
-				# time.sleep(120)
-				# imgs_pool.join()                    
 				del imgs_pool             
 				print("Download concluído!")
 				print("\nNo total, foi realizado o download de {total_imgs} imagens!".format(total_imgs=total_imgs))

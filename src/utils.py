@@ -48,7 +48,7 @@ def download_imgs(data):
 	return len_total
 
 def write_log(info):
-	file = open("log.txt", "w")
+	file = open("log.txt", "a")
 	file.write("Execução nº {n_exec}\n\n".format(n_exec = info["number_exec"]))
 	file.write("Data da última execução {curr_exec}\n\n".format(curr_exec = info["curr_exec"].strftime("%d/%m/%Y")))
 	file.write("Próxima execução {next_exec}\n\n".format(next_exec = info["next_exec"].strftime("%d/%m/%Y")))

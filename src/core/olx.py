@@ -102,13 +102,47 @@ class Olx:
 				time.sleep(300)
 				request_error += 1
 				if request_error >= 30:
-					print("request error exceded")
-					return (int(), str(), str(), str(), float(), str(), str(), str(), str(), list(), str(), str(), str(), datetime.now().astimezone().strftime("%Y-%m-%d %H:%M:%S %Z"), bool())
+					print("Requests exceded!")
+					return (
+							int(),
+							str(), 
+							str(), 
+							str(), 
+							float(), 
+							str(), 
+							str(), 
+							str(), 
+							str(), 
+							list(), 
+							str(), 
+							str(), 
+							str(), 
+							datetime.now().astimezone().strftime("%Y-%m-%d %H:%M:%S %Z"), 
+							bool()
+						)
+
 		soup = BeautifulSoup(response.text, "html.parser")
 		try:
 			script_tag = soup.find("script", attrs={"data-json":re.compile(".*")}).get("data-json")
 		except AttributeError:
-			return self.get_json(links)
+			print("Data don't found!")
+			return (
+					int(),
+					str(), 
+					str(), 
+					str(), 
+					float(), 
+					str(), 
+					str(), 
+					str(), 
+					str(), 
+					list(), 
+					str(), 
+					str(), 
+					str(), 
+					datetime.now().astimezone().strftime("%Y-%m-%d %H:%M:%S %Z"), 
+					bool()
+				)
 		json_data = json.loads(script_tag)
 
 		id_announcement = json_data["ad"]["listId"]
@@ -138,7 +172,7 @@ class Olx:
 		ddd = json_data["ad"]["location"]["ddd"]
 		url = json_data["ad"]["friendlyUrl"]
 		date_hour = json_data["ad"]["listTime"]
-		professional = json_data["ad"]["professionalAd"]      
+		professional = json_data["ad"]["professionalAd"]		   
 
 		return (
 			id_announcement,

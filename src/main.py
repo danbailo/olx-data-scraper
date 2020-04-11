@@ -4,7 +4,7 @@ from core import Olx, Database
 from datetime import timedelta
 from datetime import datetime
 from termcolor import colored
-from tqdm import tqdm
+import tqdm
 import time
 import os
 
@@ -57,14 +57,14 @@ if __name__ == "__main__":
 			print("\nColetando os links de cada anúncio nas páginas coletadas...")
 			links_pool = ThreadPool(8)
 			links = {}
-			for link in links_pool.map(olx.get_links, pages):
+			for link in list(tqdm.tqdm(links_pool.imap(olx.get_links, pages), total=len(pages), desc="Links")):
 				links.update(link)
 			del links_pool   
 			print("{len_links} Links coletados!".format(len_links=len(links)))
 
 			print("\nExtraindo os dados dos anúncios...")
-			data_pool = ThreadPool(8)
-			data = data_pool.map(olx.get_json, tqdm(links.values(), desc="Anúncios"))
+			data_pool = ThreadPool(16)
+			data = list(tqdm.tqdm(data_pool.imap(olx.get_json, links.values()), total=len(links), desc="Anúncios"))
 			del data_pool
 			
 			print("Dados extraidos!")
@@ -88,9 +88,9 @@ if __name__ == "__main__":
 			if download:
 				if not os.path.isdir(os.path.join("imgs")):
 					os.mkdir(os.path.join("imgs"))                
-				imgs_pool = ThreadPool(8)
+				imgs_pool = ThreadPool(4)
 				print("\nRealizando download das imagens...")
-				for value in imgs_pool.map(download_imgs, tqdm(data, desc="Anúncios")):
+				for value in list(tqdm.tqdm(imgs_pool.imap(download_imgs, data)), total=len(links), desc="Anúncios"):
 					total_imgs += value
 				del imgs_pool             
 				print("Download concluído!")

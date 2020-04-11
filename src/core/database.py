@@ -61,6 +61,8 @@ class Database:
 		for i in trange(len(data), desc="Anúncios"):
 			try:
 				id_anuncio = data[i][0]
+				if id_anuncio is int(): #If the data were not found!
+					continue				
 				municipio = data[i][1]
 				estado = data[i][2]
 				cep = data[i][3]

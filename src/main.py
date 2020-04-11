@@ -55,7 +55,7 @@ if __name__ == "__main__":
 			print("{len_pages} Páginas coletadas!".format(len_pages=len(pages)))
 
 			print("\nColetando os links de cada anúncio nas páginas coletadas...")
-			links_pool = ThreadPool(8)
+			links_pool = ThreadPool(4)
 			links = {}
 			for link in list(tqdm.tqdm(links_pool.imap(olx.get_links, pages), total=len(pages), desc="Links")):
 				links.update(link)
@@ -63,14 +63,13 @@ if __name__ == "__main__":
 			print("{len_links} Links coletados!".format(len_links=len(links)))
 
 			print("\nExtraindo os dados dos anúncios...")
-			data_pool = ThreadPool(8)
+			data_pool = ThreadPool(4)
 			len_imgs = 0
 			data = []
 			for data_len in list(tqdm.tqdm(data_pool.imap(olx.get_json, links.values()), total=len(links), desc="Anúncios")):
-				if data_len[0][0] is False: #If the data were not found!
+				if data_len is False: #If the data were not found!
 					continue
-				data.append(data_len[0])
-				len_imgs += data_len[1]
+				data.append(data_len)
 			del data_pool
 			
 			print("Dados extraidos!")
@@ -96,20 +95,20 @@ if __name__ == "__main__":
 					os.mkdir(os.path.join("imgs"))                
 				imgs_pool = ThreadPool(4)
 				print("\nRealizando download das imagens...")
-				for value in list(tqdm.tqdm(imgs_pool.imap(download_imgs, data), total=len_imgs, desc="Anúncios")):
+				for value in list(tqdm.tqdm(imgs_pool.imap(download_imgs, data), total=len(data), desc="Anúncios")):
 					total_imgs += value
 				del imgs_pool             
 				print("Download concluído!")
 				print("\nNo total, foi realizado o download de {total_imgs} imagens!".format(total_imgs=total_imgs))
 
 			write_log({
-				"number_exec": count_exec,
-				"curr_exec": datetime.now(),
-				"next_exec": datetime.now() + timedelta(days=int(days)),
-				"len_pages": len(pages),
-				"len_links": len(links),
-				"len_data": len(data),
-				"total_imgs": total_imgs}
+					"number_exec": count_exec,
+					"curr_exec": datetime.now(),
+					"next_exec": datetime.now() + timedelta(days=int(days)),
+					"len_pages": len(pages),
+					"len_links": len(links),
+					"len_data": len(data),
+					"total_imgs": total_imgs}
 				)			
 
 			print("Arquivo de log gerado com {success}".format(success=colored("SUCESSO!", "green")))

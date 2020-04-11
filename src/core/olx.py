@@ -99,27 +99,27 @@ class Olx:
 				response = requests.get(links, headers=headers)
 				break
 			except Exception:
-				time.sleep(300)
+				time.sleep(60)
 				request_error += 1
 				if request_error >= 30:
 					print("Requests exceded!")
 					return (
-							int(),
-							str(), 
-							str(), 
-							str(), 
-							float(), 
-							str(), 
-							str(), 
-							str(), 
-							str(), 
-							list(), 
-							str(), 
-							str(), 
-							str(), 
+							False,
+							"", 
+							"", 
+							"", 
+							0.0, 
+							"", 
+							"", 
+							"", 
+							"", 
+							[], 
+							"", 
+							"", 
+							"", 
 							datetime.now().astimezone().strftime("%Y-%m-%d %H:%M:%S %Z"), 
-							bool()
-						)
+							False
+						), 0
 
 		soup = BeautifulSoup(response.text, "html.parser")
 		try:
@@ -127,22 +127,22 @@ class Olx:
 		except AttributeError:
 			print("Data don't found!")
 			return (
-					int(),
-					str(), 
-					str(), 
-					str(), 
-					float(), 
-					str(), 
-					str(), 
-					str(), 
-					str(), 
-					list(), 
-					str(), 
-					str(), 
-					str(), 
+					False,
+					"", 
+					"", 
+					"", 
+					0.0, 
+					"", 
+					"", 
+					"", 
+					"", 
+					[], 
+					"", 
+					"", 
+					"", 
 					datetime.now().astimezone().strftime("%Y-%m-%d %H:%M:%S %Z"), 
-					bool()
-				)
+					False
+				), 0
 		json_data = json.loads(script_tag)
 
 		id_announcement = json_data["ad"]["listId"]
@@ -190,6 +190,6 @@ class Olx:
 			url,
 			date_hour,
 			professional,
-		)
+		), len(imgs)
 
 

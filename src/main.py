@@ -63,8 +63,14 @@ if __name__ == "__main__":
 			print("{len_links} Links coletados!".format(len_links=len(links)))
 
 			print("\nExtraindo os dados dos anúncios...")
-			data_pool = ThreadPool(16)
-			data = list(tqdm.tqdm(data_pool.imap(olx.get_json, links.values()), total=len(links), desc="Anúncios"))
+			data_pool = ThreadPool(8)
+			len_imgs = 0
+			data = []
+			for data_len in list(tqdm.tqdm(data_pool.imap(olx.get_json, links.values()), total=len(links), desc="Anúncios")):
+				if data_len[0][0] is False: #If the data were not found!
+					continue
+				data.append(data_len[0])
+				len_imgs += data_len[1]
 			del data_pool
 			
 			print("Dados extraidos!")
@@ -90,7 +96,7 @@ if __name__ == "__main__":
 					os.mkdir(os.path.join("imgs"))                
 				imgs_pool = ThreadPool(4)
 				print("\nRealizando download das imagens...")
-				for value in list(tqdm.tqdm(imgs_pool.imap(download_imgs, data)), total=len(links), desc="Anúncios"):
+				for value in list(tqdm.tqdm(imgs_pool.imap(download_imgs, data), total=len_imgs, desc="Anúncios")):
 					total_imgs += value
 				del imgs_pool             
 				print("Download concluído!")
